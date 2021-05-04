@@ -47,6 +47,8 @@ Route::group(
     // Authentication Routes...
         Route::get('login', ['uses' => 'Auth\LoginController@showLoginForm', 'as' => 'login']);
         Route::post('login', ['uses' => 'Auth\LoginController@login', 'as' => 'login.post']);
+        Route::get('auth/ap', ['uses' => 'Auth\LoginController@apRedirect', 'as' => 'aplogin']);
+        Route::get('auth/ap/callback', ['uses' => 'Auth\LoginController@loginWithPassport']);
 
         // Registration Routes...
         Route::get('register', ['uses' => 'Auth\RegisterController@showRegistrationForm', 'as' => 'register']);
@@ -101,6 +103,7 @@ Route::group(
     ['middleware' => ['user-full-auth'], 'namespace' => 'FireflyIII\Http\Controllers'],
     static function () {
         Route::get('/', ['uses' => 'HomeController@index', 'as' => 'index']);
+        Route::get('/welcome', 'OnboardingController@index');
         Route::get('/flash', ['uses' => 'DebugController@testFlash', 'as' => 'test-flash']);
         Route::get('/home', ['uses' => 'HomeController@index', 'as' => 'home']);
         Route::post('/daterange', ['uses' => 'HomeController@dateRange', 'as' => 'daterange']);

@@ -106,6 +106,9 @@ class EventServiceProvider extends ServiceProvider
             AccessTokenCreated::class          => [
                 'FireflyIII\Handlers\Events\APIEventHandler@accessTokenCreated',
             ],
+            \SocialiteProviders\Manager\SocialiteWasCalled::class    => [
+                'SocialiteProviders\\LaravelPassport\\LaravelPassportExtendSocialite@handle',
+            ],
         ];
 
     /**

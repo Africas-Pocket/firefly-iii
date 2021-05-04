@@ -1,4 +1,4 @@
-/*
+ /*
  * webpack.mix.js
  * Copyright (c) 2020 james@firefly-iii.org
  *
@@ -32,19 +32,21 @@ let mix = require('laravel-mix');
  */
 
 // development:
-// mix.webpackConfig({
-//                       resolve: {
-//                           alias: {
-//                               'vue$': 'vue/dist/vue.runtime.js'
-//                           }
-//                       }
-//                   });
+mix.webpackConfig({
+                      resolve: {
+                          alias: {
+                            // 'vue$': 'vue/dist/vue.runtime.js',
+                            'vue$': 'vue/dist/vue.js'
+                          }
+                      }
+                  });
 
 // production
 mix.webpackConfig({
                       resolve: {
                           alias: {
-                              'vue$': 'vue/dist/vue.runtime.common.js'
+                            // 'vue$': 'vue/dist/vue.runtime.common.js',
+                            'vue$': 'vue/dist/vue.js'
                           }
                       }
                   });
