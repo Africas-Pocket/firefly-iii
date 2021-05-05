@@ -111,6 +111,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 
 
+function _createForOfIteratorHelper(o, allowArrayLike) { var it; if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
@@ -235,7 +241,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         balance: '',
         currency: 'Currency'
       },
-      blnAddAccount: false
+      blnAddAccount: false,
+      blnError: false,
+      errorText: ""
     };
   },
   methods: {
@@ -254,64 +262,105 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var csrfToken, success;
+        var csrfToken, success, _iterator, _step, account, data;
+
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
                 csrfToken = document.querySelector('meta[name="csrf-token"]').content;
                 success = true;
+                _this.errorText = "";
+                _iterator = _createForOfIteratorHelper(_this.accounts);
+                _context.prev = 4;
 
-                _this.accounts.forEach(function (account) {
-                  if (!account.selected) {
-                    return;
-                  }
+                _iterator.s();
 
-                  var data = {
-                    "name": account.name,
-                    "type": "asset",
-                    "opening_balance": account.balance,
-                    "currency_code": account.currency,
-                    "opening_balance_date": new Date().toISOString().split('T')[0],
-                    "account_role": "defaultAsset"
-                  };
-                  fetch('/api/v1/accounts', {
-                    method: 'POST',
-                    headers: {
-                      'Content-Type': 'application/json',
-                      'Accept': 'application/json',
-                      'X-CSRF-TOKEN': csrfToken
-                    },
-                    body: JSON.stringify(data)
-                  }).then(function (response) {
-                    console.log(response.status);
+              case 6:
+                if ((_step = _iterator.n()).done) {
+                  _context.next = 15;
+                  break;
+                }
 
-                    if (response.status !== 200) {
-                      console.log("no bueno");
-                      success = false;
-                    }
+                account = _step.value;
 
-                    response.json();
-                  }).then(function (data) {
-                    console.log('Success:', data);
-                  })["catch"](function (error) {
-                    // TODO error display    
-                    console.error('Error:', error);
-                  });
+                if (account.selected) {
+                  _context.next = 10;
+                  break;
+                }
+
+                return _context.abrupt("return");
+
+              case 10:
+                data = {
+                  "name": account.name,
+                  "type": "asset",
+                  "opening_balance": account.balance,
+                  "currency_code": account.currency,
+                  "opening_balance_date": new Date().toISOString().split('T')[0],
+                  "account_role": "defaultAsset"
+                };
+                _context.next = 13;
+                return fetch('/api/v1/accounts', {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'X-CSRF-TOKEN': csrfToken
+                  },
+                  body: JSON.stringify(data)
+                }).then(function (response) {
+                  var resp = response.json();
+                  console.log(resp);
+
+                  if (response.status !== 200) {
+                    console.log("no bueno");
+                    success = false;
+                    _this.errorText = resp.errors;
+                  } // response.json()
+
+                }) // .then(data => {
+                //   console.log('Success:', data);
+                // })
+                ["catch"](function (error) {
+                  // TODO error display    
+                  console.error('Error:', error);
                 });
 
+              case 13:
+                _context.next = 6;
+                break;
+
+              case 15:
+                _context.next = 20;
+                break;
+
+              case 17:
+                _context.prev = 17;
+                _context.t0 = _context["catch"](4);
+
+                _iterator.e(_context.t0);
+
+              case 20:
+                _context.prev = 20;
+
+                _iterator.f();
+
+                return _context.finish(20);
+
+              case 23:
                 console.log("success", success);
 
                 if (success) {
                   _this.$emit('progress', 1);
                 }
 
-              case 5:
+              case 25:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee);
+        }, _callee, null, [[4, 17, 20, 23]]);
       }))();
     }
   }
@@ -345,13 +394,1072 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {// console.log('Component mounted.')
   },
   computed: {},
   data: function data() {
     return {
-      name: "John"
+      countries: [{
+        countryCode: "AD",
+        countryName: "Andorra",
+        currencyCode: "EUR"
+      }, {
+        countryCode: "AE",
+        countryName: "United Arab Emirates",
+        currencyCode: "AED"
+      }, {
+        countryCode: "AF",
+        countryName: "Afghanistan",
+        currencyCode: "AFN"
+      }, {
+        countryCode: "AG",
+        countryName: "Antigua and Barbuda",
+        currencyCode: "XCD"
+      }, {
+        countryCode: "AI",
+        countryName: "Anguilla",
+        currencyCode: "XCD"
+      }, {
+        countryCode: "AL",
+        countryName: "Albania",
+        currencyCode: "ALL"
+      }, {
+        countryCode: "AM",
+        countryName: "Armenia",
+        currencyCode: "AMD"
+      }, {
+        countryCode: "AO",
+        countryName: "Angola",
+        currencyCode: "AOA"
+      }, {
+        countryCode: "AQ",
+        countryName: "Antarctica",
+        currencyCode: ""
+      }, {
+        countryCode: "AR",
+        countryName: "Argentina",
+        currencyCode: "ARS"
+      }, {
+        countryCode: "AS",
+        countryName: "American Samoa",
+        currencyCode: "USD"
+      }, {
+        countryCode: "AT",
+        countryName: "Austria",
+        currencyCode: "EUR"
+      }, {
+        countryCode: "AU",
+        countryName: "Australia",
+        currencyCode: "AUD"
+      }, {
+        countryCode: "AW",
+        countryName: "Aruba",
+        currencyCode: "AWG"
+      }, {
+        countryCode: "AX",
+        countryName: "Åland",
+        currencyCode: "EUR"
+      }, {
+        countryCode: "AZ",
+        countryName: "Azerbaijan",
+        currencyCode: "AZN"
+      }, {
+        countryCode: "BA",
+        countryName: "Bosnia and Herzegovina",
+        currencyCode: "BAM"
+      }, {
+        countryCode: "BB",
+        countryName: "Barbados",
+        currencyCode: "BBD"
+      }, {
+        countryCode: "BD",
+        countryName: "Bangladesh",
+        currencyCode: "BDT"
+      }, {
+        countryCode: "BE",
+        countryName: "Belgium",
+        currencyCode: "EUR"
+      }, {
+        countryCode: "BF",
+        countryName: "Burkina Faso",
+        currencyCode: "XOF"
+      }, {
+        countryCode: "BG",
+        countryName: "Bulgaria",
+        currencyCode: "BGN"
+      }, {
+        countryCode: "BH",
+        countryName: "Bahrain",
+        currencyCode: "BHD"
+      }, {
+        countryCode: "BI",
+        countryName: "Burundi",
+        currencyCode: "BIF"
+      }, {
+        countryCode: "BJ",
+        countryName: "Benin",
+        currencyCode: "XOF"
+      }, {
+        countryCode: "BL",
+        countryName: "Saint Barthélemy",
+        currencyCode: "EUR"
+      }, {
+        countryCode: "BM",
+        countryName: "Bermuda",
+        currencyCode: "BMD"
+      }, {
+        countryCode: "BN",
+        countryName: "Brunei",
+        currencyCode: "BND"
+      }, {
+        countryCode: "BO",
+        countryName: "Bolivia",
+        currencyCode: "BOB"
+      }, {
+        countryCode: "BQ",
+        countryName: "Bonaire",
+        currencyCode: "USD"
+      }, {
+        countryCode: "BR",
+        countryName: "Brazil",
+        currencyCode: "BRL"
+      }, {
+        countryCode: "BS",
+        countryName: "Bahamas",
+        currencyCode: "BSD"
+      }, {
+        countryCode: "BT",
+        countryName: "Bhutan",
+        currencyCode: "BTN"
+      }, {
+        countryCode: "BV",
+        countryName: "Bouvet Island",
+        currencyCode: "NOK"
+      }, {
+        countryCode: "BW",
+        countryName: "Botswana",
+        currencyCode: "BWP"
+      }, {
+        countryCode: "BY",
+        countryName: "Belarus",
+        currencyCode: "BYR"
+      }, {
+        countryCode: "BZ",
+        countryName: "Belize",
+        currencyCode: "BZD"
+      }, {
+        countryCode: "CA",
+        countryName: "Canada",
+        currencyCode: "CAD"
+      }, {
+        countryCode: "CC",
+        countryName: "Cocos [Keeling] Islands",
+        currencyCode: "AUD"
+      }, {
+        countryCode: "CD",
+        countryName: "Democratic Republic of the Congo",
+        currencyCode: "CDF"
+      }, {
+        countryCode: "CF",
+        countryName: "Central African Republic",
+        currencyCode: "XAF"
+      }, {
+        countryCode: "CG",
+        countryName: "Republic of the Congo",
+        currencyCode: "XAF"
+      }, {
+        countryCode: "CH",
+        countryName: "Switzerland",
+        currencyCode: "CHF"
+      }, {
+        countryCode: "CI",
+        countryName: "Ivory Coast",
+        currencyCode: "XOF"
+      }, {
+        countryCode: "CK",
+        countryName: "Cook Islands",
+        currencyCode: "NZD"
+      }, {
+        countryCode: "CL",
+        countryName: "Chile",
+        currencyCode: "CLP"
+      }, {
+        countryCode: "CM",
+        countryName: "Cameroon",
+        currencyCode: "XAF"
+      }, {
+        countryCode: "CN",
+        countryName: "China",
+        currencyCode: "CNY"
+      }, {
+        countryCode: "CO",
+        countryName: "Colombia",
+        currencyCode: "COP"
+      }, {
+        countryCode: "CR",
+        countryName: "Costa Rica",
+        currencyCode: "CRC"
+      }, {
+        countryCode: "CU",
+        countryName: "Cuba",
+        currencyCode: "CUP"
+      }, {
+        countryCode: "CV",
+        countryName: "Cape Verde",
+        currencyCode: "CVE"
+      }, {
+        countryCode: "CW",
+        countryName: "Curacao",
+        currencyCode: "ANG"
+      }, {
+        countryCode: "CX",
+        countryName: "Christmas Island",
+        currencyCode: "AUD"
+      }, {
+        countryCode: "CY",
+        countryName: "Cyprus",
+        currencyCode: "EUR"
+      }, {
+        countryCode: "CZ",
+        countryName: "Czechia",
+        currencyCode: "CZK"
+      }, {
+        countryCode: "DE",
+        countryName: "Germany",
+        currencyCode: "EUR"
+      }, {
+        countryCode: "DJ",
+        countryName: "Djibouti",
+        currencyCode: "DJF"
+      }, {
+        countryCode: "DK",
+        countryName: "Denmark",
+        currencyCode: "DKK"
+      }, {
+        countryCode: "DM",
+        countryName: "Dominica",
+        currencyCode: "XCD"
+      }, {
+        countryCode: "DO",
+        countryName: "Dominican Republic",
+        currencyCode: "DOP"
+      }, {
+        countryCode: "DZ",
+        countryName: "Algeria",
+        currencyCode: "DZD"
+      }, {
+        countryCode: "EC",
+        countryName: "Ecuador",
+        currencyCode: "USD"
+      }, {
+        countryCode: "EE",
+        countryName: "Estonia",
+        currencyCode: "EUR"
+      }, {
+        countryCode: "EG",
+        countryName: "Egypt",
+        currencyCode: "EGP"
+      }, {
+        countryCode: "EH",
+        countryName: "Western Sahara",
+        currencyCode: "MAD"
+      }, {
+        countryCode: "ER",
+        countryName: "Eritrea",
+        currencyCode: "ERN"
+      }, {
+        countryCode: "ES",
+        countryName: "Spain",
+        currencyCode: "EUR"
+      }, {
+        countryCode: "ET",
+        countryName: "Ethiopia",
+        currencyCode: "ETB"
+      }, {
+        countryCode: "FI",
+        countryName: "Finland",
+        currencyCode: "EUR"
+      }, {
+        countryCode: "FJ",
+        countryName: "Fiji",
+        currencyCode: "FJD"
+      }, {
+        countryCode: "FK",
+        countryName: "Falkland Islands",
+        currencyCode: "FKP"
+      }, {
+        countryCode: "FM",
+        countryName: "Micronesia",
+        currencyCode: "USD"
+      }, {
+        countryCode: "FO",
+        countryName: "Faroe Islands",
+        currencyCode: "DKK"
+      }, {
+        countryCode: "FR",
+        countryName: "France",
+        currencyCode: "EUR"
+      }, {
+        countryCode: "GA",
+        countryName: "Gabon",
+        currencyCode: "XAF"
+      }, {
+        countryCode: "GB",
+        countryName: "United Kingdom",
+        currencyCode: "GBP"
+      }, {
+        countryCode: "GD",
+        countryName: "Grenada",
+        currencyCode: "XCD"
+      }, {
+        countryCode: "GE",
+        countryName: "Georgia",
+        currencyCode: "GEL"
+      }, {
+        countryCode: "GF",
+        countryName: "French Guiana",
+        currencyCode: "EUR"
+      }, {
+        countryCode: "GG",
+        countryName: "Guernsey",
+        currencyCode: "GBP"
+      }, {
+        countryCode: "GH",
+        countryName: "Ghana",
+        currencyCode: "GHS"
+      }, {
+        countryCode: "GI",
+        countryName: "Gibraltar",
+        currencyCode: "GIP"
+      }, {
+        countryCode: "GL",
+        countryName: "Greenland",
+        currencyCode: "DKK"
+      }, {
+        countryCode: "GM",
+        countryName: "Gambia",
+        currencyCode: "GMD"
+      }, {
+        countryCode: "GN",
+        countryName: "Guinea",
+        currencyCode: "GNF"
+      }, {
+        countryCode: "GP",
+        countryName: "Guadeloupe",
+        currencyCode: "EUR"
+      }, {
+        countryCode: "GQ",
+        countryName: "Equatorial Guinea",
+        currencyCode: "XAF"
+      }, {
+        countryCode: "GR",
+        countryName: "Greece",
+        currencyCode: "EUR"
+      }, {
+        countryCode: "GS",
+        countryName: "South Georgia and the South Sandwich Islands",
+        currencyCode: "GBP"
+      }, {
+        countryCode: "GT",
+        countryName: "Guatemala",
+        currencyCode: "GTQ"
+      }, {
+        countryCode: "GU",
+        countryName: "Guam",
+        currencyCode: "USD"
+      }, {
+        countryCode: "GW",
+        countryName: "Guinea-Bissau",
+        currencyCode: "XOF"
+      }, {
+        countryCode: "GY",
+        countryName: "Guyana",
+        currencyCode: "GYD"
+      }, {
+        countryCode: "HK",
+        countryName: "Hong Kong",
+        currencyCode: "HKD"
+      }, {
+        countryCode: "HM",
+        countryName: "Heard Island and McDonald Islands",
+        currencyCode: "AUD"
+      }, {
+        countryCode: "HN",
+        countryName: "Honduras",
+        currencyCode: "HNL"
+      }, {
+        countryCode: "HR",
+        countryName: "Croatia",
+        currencyCode: "HRK"
+      }, {
+        countryCode: "HT",
+        countryName: "Haiti",
+        currencyCode: "HTG"
+      }, {
+        countryCode: "HU",
+        countryName: "Hungary",
+        currencyCode: "HUF"
+      }, {
+        countryCode: "ID",
+        countryName: "Indonesia",
+        currencyCode: "IDR"
+      }, {
+        countryCode: "IE",
+        countryName: "Ireland",
+        currencyCode: "EUR"
+      }, {
+        countryCode: "IL",
+        countryName: "Israel",
+        currencyCode: "ILS"
+      }, {
+        countryCode: "IM",
+        countryName: "Isle of Man",
+        currencyCode: "GBP"
+      }, {
+        countryCode: "IN",
+        countryName: "India",
+        currencyCode: "INR"
+      }, {
+        countryCode: "IO",
+        countryName: "British Indian Ocean Territory",
+        currencyCode: "USD"
+      }, {
+        countryCode: "IQ",
+        countryName: "Iraq",
+        currencyCode: "IQD"
+      }, {
+        countryCode: "IR",
+        countryName: "Iran",
+        currencyCode: "IRR"
+      }, {
+        countryCode: "IS",
+        countryName: "Iceland",
+        currencyCode: "ISK"
+      }, {
+        countryCode: "IT",
+        countryName: "Italy",
+        currencyCode: "EUR"
+      }, {
+        countryCode: "JE",
+        countryName: "Jersey",
+        currencyCode: "GBP"
+      }, {
+        countryCode: "JM",
+        countryName: "Jamaica",
+        currencyCode: "JMD"
+      }, {
+        countryCode: "JO",
+        countryName: "Jordan",
+        currencyCode: "JOD"
+      }, {
+        countryCode: "JP",
+        countryName: "Japan",
+        currencyCode: "JPY"
+      }, {
+        countryCode: "KE",
+        countryName: "Kenya",
+        currencyCode: "KES"
+      }, {
+        countryCode: "KG",
+        countryName: "Kyrgyzstan",
+        currencyCode: "KGS"
+      }, {
+        countryCode: "KH",
+        countryName: "Cambodia",
+        currencyCode: "KHR"
+      }, {
+        countryCode: "KI",
+        countryName: "Kiribati",
+        currencyCode: "AUD"
+      }, {
+        countryCode: "KM",
+        countryName: "Comoros",
+        currencyCode: "KMF"
+      }, {
+        countryCode: "KN",
+        countryName: "Saint Kitts and Nevis",
+        currencyCode: "XCD"
+      }, {
+        countryCode: "KP",
+        countryName: "North Korea",
+        currencyCode: "KPW"
+      }, {
+        countryCode: "KR",
+        countryName: "South Korea",
+        currencyCode: "KRW"
+      }, {
+        countryCode: "KW",
+        countryName: "Kuwait",
+        currencyCode: "KWD"
+      }, {
+        countryCode: "KY",
+        countryName: "Cayman Islands",
+        currencyCode: "KYD"
+      }, {
+        countryCode: "KZ",
+        countryName: "Kazakhstan",
+        currencyCode: "KZT"
+      }, {
+        countryCode: "LA",
+        countryName: "Laos",
+        currencyCode: "LAK"
+      }, {
+        countryCode: "LB",
+        countryName: "Lebanon",
+        currencyCode: "LBP"
+      }, {
+        countryCode: "LC",
+        countryName: "Saint Lucia",
+        currencyCode: "XCD"
+      }, {
+        countryCode: "LI",
+        countryName: "Liechtenstein",
+        currencyCode: "CHF"
+      }, {
+        countryCode: "LK",
+        countryName: "Sri Lanka",
+        currencyCode: "LKR"
+      }, {
+        countryCode: "LR",
+        countryName: "Liberia",
+        currencyCode: "LRD"
+      }, {
+        countryCode: "LS",
+        countryName: "Lesotho",
+        currencyCode: "LSL"
+      }, {
+        countryCode: "LT",
+        countryName: "Lithuania",
+        currencyCode: "EUR"
+      }, {
+        countryCode: "LU",
+        countryName: "Luxembourg",
+        currencyCode: "EUR"
+      }, {
+        countryCode: "LV",
+        countryName: "Latvia",
+        currencyCode: "EUR"
+      }, {
+        countryCode: "LY",
+        countryName: "Libya",
+        currencyCode: "LYD"
+      }, {
+        countryCode: "MA",
+        countryName: "Morocco",
+        currencyCode: "MAD"
+      }, {
+        countryCode: "MC",
+        countryName: "Monaco",
+        currencyCode: "EUR"
+      }, {
+        countryCode: "MD",
+        countryName: "Moldova",
+        currencyCode: "MDL"
+      }, {
+        countryCode: "ME",
+        countryName: "Montenegro",
+        currencyCode: "EUR"
+      }, {
+        countryCode: "MF",
+        countryName: "Saint Martin",
+        currencyCode: "EUR"
+      }, {
+        countryCode: "MG",
+        countryName: "Madagascar",
+        currencyCode: "MGA"
+      }, {
+        countryCode: "MH",
+        countryName: "Marshall Islands",
+        currencyCode: "USD"
+      }, {
+        countryCode: "MK",
+        countryName: "Macedonia",
+        currencyCode: "MKD"
+      }, {
+        countryCode: "ML",
+        countryName: "Mali",
+        currencyCode: "XOF"
+      }, {
+        countryCode: "MM",
+        countryName: "Myanmar [Burma]",
+        currencyCode: "MMK"
+      }, {
+        countryCode: "MN",
+        countryName: "Mongolia",
+        currencyCode: "MNT"
+      }, {
+        countryCode: "MO",
+        countryName: "Macao",
+        currencyCode: "MOP"
+      }, {
+        countryCode: "MP",
+        countryName: "Northern Mariana Islands",
+        currencyCode: "USD"
+      }, {
+        countryCode: "MQ",
+        countryName: "Martinique",
+        currencyCode: "EUR"
+      }, {
+        countryCode: "MR",
+        countryName: "Mauritania",
+        currencyCode: "MRO"
+      }, {
+        countryCode: "MS",
+        countryName: "Montserrat",
+        currencyCode: "XCD"
+      }, {
+        countryCode: "MT",
+        countryName: "Malta",
+        currencyCode: "EUR"
+      }, {
+        countryCode: "MU",
+        countryName: "Mauritius",
+        currencyCode: "MUR"
+      }, {
+        countryCode: "MV",
+        countryName: "Maldives",
+        currencyCode: "MVR"
+      }, {
+        countryCode: "MW",
+        countryName: "Malawi",
+        currencyCode: "MWK"
+      }, {
+        countryCode: "MX",
+        countryName: "Mexico",
+        currencyCode: "MXN"
+      }, {
+        countryCode: "MY",
+        countryName: "Malaysia",
+        currencyCode: "MYR"
+      }, {
+        countryCode: "MZ",
+        countryName: "Mozambique",
+        currencyCode: "MZN"
+      }, {
+        countryCode: "NA",
+        countryName: "Namibia",
+        currencyCode: "NAD"
+      }, {
+        countryCode: "NC",
+        countryName: "New Caledonia",
+        currencyCode: "XPF"
+      }, {
+        countryCode: "NE",
+        countryName: "Niger",
+        currencyCode: "XOF"
+      }, {
+        countryCode: "NF",
+        countryName: "Norfolk Island",
+        currencyCode: "AUD"
+      }, {
+        countryCode: "NG",
+        countryName: "Nigeria",
+        currencyCode: "NGN"
+      }, {
+        countryCode: "NI",
+        countryName: "Nicaragua",
+        currencyCode: "NIO"
+      }, {
+        countryCode: "NL",
+        countryName: "Netherlands",
+        currencyCode: "EUR"
+      }, {
+        countryCode: "NO",
+        countryName: "Norway",
+        currencyCode: "NOK"
+      }, {
+        countryCode: "NP",
+        countryName: "Nepal",
+        currencyCode: "NPR"
+      }, {
+        countryCode: "NR",
+        countryName: "Nauru",
+        currencyCode: "AUD"
+      }, {
+        countryCode: "NU",
+        countryName: "Niue",
+        currencyCode: "NZD"
+      }, {
+        countryCode: "NZ",
+        countryName: "New Zealand",
+        currencyCode: "NZD"
+      }, {
+        countryCode: "OM",
+        countryName: "Oman",
+        currencyCode: "OMR"
+      }, {
+        countryCode: "PA",
+        countryName: "Panama",
+        currencyCode: "PAB"
+      }, {
+        countryCode: "PE",
+        countryName: "Peru",
+        currencyCode: "PEN"
+      }, {
+        countryCode: "PF",
+        countryName: "French Polynesia",
+        currencyCode: "XPF"
+      }, {
+        countryCode: "PG",
+        countryName: "Papua New Guinea",
+        currencyCode: "PGK"
+      }, {
+        countryCode: "PH",
+        countryName: "Philippines",
+        currencyCode: "PHP"
+      }, {
+        countryCode: "PK",
+        countryName: "Pakistan",
+        currencyCode: "PKR"
+      }, {
+        countryCode: "PL",
+        countryName: "Poland",
+        currencyCode: "PLN"
+      }, {
+        countryCode: "PM",
+        countryName: "Saint Pierre and Miquelon",
+        currencyCode: "EUR"
+      }, {
+        countryCode: "PN",
+        countryName: "Pitcairn Islands",
+        currencyCode: "NZD"
+      }, {
+        countryCode: "PR",
+        countryName: "Puerto Rico",
+        currencyCode: "USD"
+      }, {
+        countryCode: "PS",
+        countryName: "Palestine",
+        currencyCode: "ILS"
+      }, {
+        countryCode: "PT",
+        countryName: "Portugal",
+        currencyCode: "EUR"
+      }, {
+        countryCode: "PW",
+        countryName: "Palau",
+        currencyCode: "USD"
+      }, {
+        countryCode: "PY",
+        countryName: "Paraguay",
+        currencyCode: "PYG"
+      }, {
+        countryCode: "QA",
+        countryName: "Qatar",
+        currencyCode: "QAR"
+      }, {
+        countryCode: "RE",
+        countryName: "Réunion",
+        currencyCode: "EUR"
+      }, {
+        countryCode: "RO",
+        countryName: "Romania",
+        currencyCode: "RON"
+      }, {
+        countryCode: "RS",
+        countryName: "Serbia",
+        currencyCode: "RSD"
+      }, {
+        countryCode: "RU",
+        countryName: "Russia",
+        currencyCode: "RUB"
+      }, {
+        countryCode: "RW",
+        countryName: "Rwanda",
+        currencyCode: "RWF"
+      }, {
+        countryCode: "SA",
+        countryName: "Saudi Arabia",
+        currencyCode: "SAR"
+      }, {
+        countryCode: "SB",
+        countryName: "Solomon Islands",
+        currencyCode: "SBD"
+      }, {
+        countryCode: "SC",
+        countryName: "Seychelles",
+        currencyCode: "SCR"
+      }, {
+        countryCode: "SD",
+        countryName: "Sudan",
+        currencyCode: "SDG"
+      }, {
+        countryCode: "SE",
+        countryName: "Sweden",
+        currencyCode: "SEK"
+      }, {
+        countryCode: "SG",
+        countryName: "Singapore",
+        currencyCode: "SGD"
+      }, {
+        countryCode: "SH",
+        countryName: "Saint Helena",
+        currencyCode: "SHP"
+      }, {
+        countryCode: "SI",
+        countryName: "Slovenia",
+        currencyCode: "EUR"
+      }, {
+        countryCode: "SJ",
+        countryName: "Svalbard and Jan Mayen",
+        currencyCode: "NOK"
+      }, {
+        countryCode: "SK",
+        countryName: "Slovakia",
+        currencyCode: "EUR"
+      }, {
+        countryCode: "SL",
+        countryName: "Sierra Leone",
+        currencyCode: "SLL"
+      }, {
+        countryCode: "SM",
+        countryName: "San Marino",
+        currencyCode: "EUR"
+      }, {
+        countryCode: "SN",
+        countryName: "Senegal",
+        currencyCode: "XOF"
+      }, {
+        countryCode: "SO",
+        countryName: "Somalia",
+        currencyCode: "SOS"
+      }, {
+        countryCode: "SR",
+        countryName: "Suriname",
+        currencyCode: "SRD"
+      }, {
+        countryCode: "SS",
+        countryName: "South Sudan",
+        currencyCode: "SSP"
+      }, {
+        countryCode: "ST",
+        countryName: "São Tomé and Príncipe",
+        currencyCode: "STD"
+      }, {
+        countryCode: "SV",
+        countryName: "El Salvador",
+        currencyCode: "USD"
+      }, {
+        countryCode: "SX",
+        countryName: "Sint Maarten",
+        currencyCode: "ANG"
+      }, {
+        countryCode: "SY",
+        countryName: "Syria",
+        currencyCode: "SYP"
+      }, {
+        countryCode: "SZ",
+        countryName: "Swaziland",
+        currencyCode: "SZL"
+      }, {
+        countryCode: "TC",
+        countryName: "Turks and Caicos Islands",
+        currencyCode: "USD"
+      }, {
+        countryCode: "TD",
+        countryName: "Chad",
+        currencyCode: "XAF"
+      }, {
+        countryCode: "TF",
+        countryName: "French Southern Territories",
+        currencyCode: "EUR"
+      }, {
+        countryCode: "TG",
+        countryName: "Togo",
+        currencyCode: "XOF"
+      }, {
+        countryCode: "TH",
+        countryName: "Thailand",
+        currencyCode: "THB"
+      }, {
+        countryCode: "TJ",
+        countryName: "Tajikistan",
+        currencyCode: "TJS"
+      }, {
+        countryCode: "TK",
+        countryName: "Tokelau",
+        currencyCode: "NZD"
+      }, {
+        countryCode: "TL",
+        countryName: "East Timor",
+        currencyCode: "USD"
+      }, {
+        countryCode: "TM",
+        countryName: "Turkmenistan",
+        currencyCode: "TMT"
+      }, {
+        countryCode: "TN",
+        countryName: "Tunisia",
+        currencyCode: "TND"
+      }, {
+        countryCode: "TO",
+        countryName: "Tonga",
+        currencyCode: "TOP"
+      }, {
+        countryCode: "TR",
+        countryName: "Turkey",
+        currencyCode: "TRY"
+      }, {
+        countryCode: "TT",
+        countryName: "Trinidad and Tobago",
+        currencyCode: "TTD"
+      }, {
+        countryCode: "TV",
+        countryName: "Tuvalu",
+        currencyCode: "AUD"
+      }, {
+        countryCode: "TW",
+        countryName: "Taiwan",
+        currencyCode: "TWD"
+      }, {
+        countryCode: "TZ",
+        countryName: "Tanzania",
+        currencyCode: "TZS"
+      }, {
+        countryCode: "UA",
+        countryName: "Ukraine",
+        currencyCode: "UAH"
+      }, {
+        countryCode: "UG",
+        countryName: "Uganda",
+        currencyCode: "UGX"
+      }, {
+        countryCode: "UM",
+        countryName: "U.S. Minor Outlying Islands",
+        currencyCode: "USD"
+      }, {
+        countryCode: "US",
+        countryName: "United States",
+        currencyCode: "USD"
+      }, {
+        countryCode: "UY",
+        countryName: "Uruguay",
+        currencyCode: "UYU"
+      }, {
+        countryCode: "UZ",
+        countryName: "Uzbekistan",
+        currencyCode: "UZS"
+      }, {
+        countryCode: "VA",
+        countryName: "Vatican City",
+        currencyCode: "EUR"
+      }, {
+        countryCode: "VC",
+        countryName: "Saint Vincent and the Grenadines",
+        currencyCode: "XCD"
+      }, {
+        countryCode: "VE",
+        countryName: "Venezuela",
+        currencyCode: "VEF"
+      }, {
+        countryCode: "VG",
+        countryName: "British Virgin Islands",
+        currencyCode: "USD"
+      }, {
+        countryCode: "VI",
+        countryName: "U.S. Virgin Islands",
+        currencyCode: "USD"
+      }, {
+        countryCode: "VN",
+        countryName: "Vietnam",
+        currencyCode: "VND"
+      }, {
+        countryCode: "VU",
+        countryName: "Vanuatu",
+        currencyCode: "VUV"
+      }, {
+        countryCode: "WF",
+        countryName: "Wallis and Futuna",
+        currencyCode: "XPF"
+      }, {
+        countryCode: "WS",
+        countryName: "Samoa",
+        currencyCode: "WST"
+      }, {
+        countryCode: "XK",
+        countryName: "Kosovo",
+        currencyCode: "EUR"
+      }, {
+        countryCode: "YE",
+        countryName: "Yemen",
+        currencyCode: "YER"
+      }, {
+        countryCode: "YT",
+        countryName: "Mayotte",
+        currencyCode: "EUR"
+      }, {
+        countryCode: "ZA",
+        countryName: "South Africa",
+        currencyCode: "ZAR"
+      }, {
+        countryCode: "ZM",
+        countryName: "Zambia",
+        currencyCode: "ZMW"
+      }, {
+        countryCode: "ZW",
+        countryName: "Zimbabwe",
+        currencyCode: "ZWL"
+      }],
+      preferredName: "",
+      livingCountry: "",
+      originCountry: "",
+      age: "",
+      gender: "",
+      educationLevel: "",
+      status: "",
+      roles: [],
+      currencies: []
     };
   }
 });
@@ -370,6 +1478,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 
+
+function _createForOfIteratorHelper(o, allowArrayLike) { var it; if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
@@ -520,66 +1634,101 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var csrfToken;
+        var csrfToken, _iterator, _step, expense, data;
+
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
                 csrfToken = document.querySelector('meta[name="csrf-token"]').content;
+                _iterator = _createForOfIteratorHelper(_this.expenses);
+                _context.prev = 2;
 
-                _this.expenses.forEach(function (expense) {
-                  if (!expense.selected) {
-                    return;
-                  }
+                _iterator.s();
 
-                  var data = {
-                    "type": "withdrawal",
-                    "title": expense.name,
-                    "first_date": expense.due,
-                    // "repeat_until": null,
-                    "nr_of_repetitions": 20,
-                    "apply_rules": true,
-                    "active": true,
-                    "notes": "",
-                    "repetitions": [{
-                      "type": expense.frequency,
-                      "moment": "3",
-                      "skip": 0,
-                      "weekend": 1
-                    }],
-                    "transactions": [{
-                      "description": expense.name,
-                      "amount": expense.amount,
-                      "currency_code": expense.currency,
-                      "source_id": "24" // "destination_id": "1",
+              case 4:
+                if ((_step = _iterator.n()).done) {
+                  _context.next = 12;
+                  break;
+                }
 
-                    }]
-                  };
-                  fetch('/api/v1/recurrences', {
-                    method: 'POST',
-                    // or 'PUT'
-                    headers: {
-                      'Content-Type': 'application/json',
-                      'Accept': 'application/json',
-                      'X-CSRF-TOKEN': csrfToken
-                    },
-                    body: JSON.stringify(data)
-                  }).then(function (response) {
-                    return response.json();
-                  }).then(function (data) {
-                    console.log('Success:', data);
-                  })["catch"](function (error) {
-                    console.error('Error:', error);
-                  });
-                }); // this.goHome()
+                expense = _step.value;
 
+                if (expense.selected) {
+                  _context.next = 8;
+                  break;
+                }
 
-              case 2:
+                return _context.abrupt("return");
+
+              case 8:
+                data = {
+                  "type": "withdrawal",
+                  "title": expense.name,
+                  "first_date": expense.due,
+                  // "repeat_until": null,
+                  "nr_of_repetitions": 20,
+                  "apply_rules": true,
+                  "active": true,
+                  "notes": "",
+                  "repetitions": [{
+                    "type": expense.frequency,
+                    "moment": "3",
+                    "skip": 0,
+                    "weekend": 1
+                  }],
+                  "transactions": [{
+                    "description": expense.name,
+                    "amount": expense.amount,
+                    "currency_code": expense.currency,
+                    "source_id": "24" // "destination_id": "1",
+
+                  }]
+                };
+                fetch('/api/v1/recurrences', {
+                  method: 'POST',
+                  // or 'PUT'
+                  headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'X-CSRF-TOKEN': csrfToken
+                  },
+                  body: JSON.stringify(data)
+                }).then(function (response) {
+                  return response.json();
+                }).then(function (data) {
+                  console.log('Success:', data);
+                })["catch"](function (error) {
+                  console.error('Error:', error);
+                });
+
+              case 10:
+                _context.next = 4;
+                break;
+
+              case 12:
+                _context.next = 17;
+                break;
+
+              case 14:
+                _context.prev = 14;
+                _context.t0 = _context["catch"](2);
+
+                _iterator.e(_context.t0);
+
+              case 17:
+                _context.prev = 17;
+
+                _iterator.f();
+
+                return _context.finish(17);
+
+              case 20:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee);
+        }, _callee, null, [[2, 14, 17, 20]]);
       }))();
     },
     goHome: function goHome() {
@@ -602,6 +1751,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 
+
+function _createForOfIteratorHelper(o, allowArrayLike) { var it; if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
@@ -753,7 +1908,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var csrfToken, tomorrow;
+        var csrfToken, tomorrow, _iterator, _step, income, data;
+
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
@@ -761,61 +1917,97 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 csrfToken = document.querySelector('meta[name="csrf-token"]').content;
                 tomorrow = new Date();
                 tomorrow.setDate(new Date().getDate() + 1);
+                _iterator = _createForOfIteratorHelper(_this.incomes);
+                _context.prev = 4;
 
-                _this.incomes.forEach(function (income) {
-                  if (!income.selected) {
-                    return;
-                  }
+                _iterator.s();
 
-                  var data = {
-                    "type": "deposit",
-                    "title": income.name,
-                    "first_date": tomorrow.toISOString().split('T')[0],
-                    // "repeat_until": null,
-                    "nr_of_repetitions": 20,
-                    "apply_rules": true,
-                    "active": true,
-                    "notes": "",
-                    "repetitions": [{
-                      "type": income.frequency,
-                      "moment": "3",
-                      "skip": 0,
-                      "weekend": 1
-                    }],
-                    "transactions": [{
-                      "description": income.name,
-                      "amount": income.amount,
-                      "currency_code": income.currency,
-                      "source_id": "32",
-                      "destination_id": "1"
-                    }]
-                  };
-                  fetch('/api/v1/recurrences', {
-                    method: 'POST',
-                    // or 'PUT'
-                    headers: {
-                      'Content-Type': 'application/json',
-                      'Accept': 'application/json',
-                      'X-CSRF-TOKEN': csrfToken
-                    },
-                    body: JSON.stringify(data)
-                  }).then(function (response) {
-                    return response.json();
-                  }).then(function (data) {
-                    console.log('Success:', data);
-                  })["catch"](function (error) {
-                    console.error('Error:', error);
-                  });
+              case 6:
+                if ((_step = _iterator.n()).done) {
+                  _context.next = 14;
+                  break;
+                }
+
+                income = _step.value;
+
+                if (income.selected) {
+                  _context.next = 10;
+                  break;
+                }
+
+                return _context.abrupt("return");
+
+              case 10:
+                data = {
+                  "type": "deposit",
+                  "title": income.name,
+                  "first_date": tomorrow.toISOString().split('T')[0],
+                  // "repeat_until": null,
+                  "nr_of_repetitions": 20,
+                  "apply_rules": true,
+                  "active": true,
+                  "notes": "",
+                  "repetitions": [{
+                    "type": income.frequency,
+                    "moment": "3",
+                    "skip": 0,
+                    "weekend": 1
+                  }],
+                  "transactions": [{
+                    "description": income.name,
+                    "amount": income.amount,
+                    "currency_code": income.currency,
+                    "source_id": "32",
+                    "destination_id": "1"
+                  }]
+                };
+                fetch('/api/v1/recurrences', {
+                  method: 'POST',
+                  // or 'PUT'
+                  headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'X-CSRF-TOKEN': csrfToken
+                  },
+                  body: JSON.stringify(data)
+                }).then(function (response) {
+                  return response.json();
+                }).then(function (data) {
+                  console.log('Success:', data);
+                })["catch"](function (error) {
+                  console.error('Error:', error);
                 });
 
+              case 12:
+                _context.next = 6;
+                break;
+
+              case 14:
+                _context.next = 19;
+                break;
+
+              case 16:
+                _context.prev = 16;
+                _context.t0 = _context["catch"](4);
+
+                _iterator.e(_context.t0);
+
+              case 19:
+                _context.prev = 19;
+
+                _iterator.f();
+
+                return _context.finish(19);
+
+              case 22:
                 _this.$emit('progress', 1);
 
-              case 5:
+              case 23:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee);
+        }, _callee, null, [[4, 16, 19, 22]]);
       }))();
     }
   }
@@ -883,9 +2075,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   computed: {},
   data: function data() {
-    return {
-      name: "Val"
-    };
+    return {};
   }
 });
 
@@ -1007,7 +2197,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n.push[data-v-05a821dc]{\n  padding-top: 100px;\n}\nbody[data-v-05a821dc] {\n  background-image: none;\n}\n", ""]);
+exports.push([module.i, "\n.push[data-v-05a821dc] {\n  padding-top: 100px;\n}\nbody[data-v-05a821dc] {\n  background-image: none;\n}\n", ""]);
 
 // exports
 
@@ -13868,6 +15058,8 @@ var render = function() {
           ? _c("h2", [_vm._v("CREATE A NEW ASSET ACCOUNT")])
           : _vm._e(),
         _vm._v(" "),
+        _vm.blnError ? _c("h3", [_vm._v(_vm._s(_vm.errorText))]) : _vm._e(),
+        _vm._v(" "),
         _c("br"),
         _c("br"),
         _vm._v(" "),
@@ -14379,74 +15571,98 @@ var render = function() {
     _vm._v(" "),
     _c("p", [
       _vm._v(
-        "This will help us recommend useful investment opportunities to you based on your profile."
+        "\n    This will help us recommend useful investment opportunities to you based\n    on your profile.\n  "
       )
     ]),
     _vm._v(" "),
     _c("br"),
     _vm._v(" "),
     _c("h2", [
-      _vm._v("My preferred name is "),
+      _vm._v("\n    My preferred name is\n    "),
       _c("input", {
         attrs: { type: "text", id: "preferedName", placeholder: "" }
       }),
-      _vm._v(". I currently live in "),
-      _c("select", {}, [
-        _c("option", { attrs: { selected: "" } }, [_vm._v("Name of country")])
-      ]),
-      _vm._v(" and I'm originally from "),
-      _c("select", {}, [
-        _c("option", { attrs: { selected: "" } }, [_vm._v("Name of country")])
-      ])
+      _vm._v(". I\n    currently live in\n    "),
+      _c(
+        "select",
+        {},
+        [
+          _c("option", { attrs: { selected: "", disabled: "" } }, [
+            _vm._v("Name of country")
+          ]),
+          _vm._v(" "),
+          _vm._l(_vm.countries, function(country, index) {
+            return _c("option", { key: index }, [
+              _vm._v(_vm._s(country.countryName))
+            ])
+          })
+        ],
+        2
+      ),
+      _vm._v("\n    and I'm originally from\n    "),
+      _c(
+        "select",
+        {},
+        [
+          _c("option", { attrs: { selected: "", disabled: "" } }, [
+            _vm._v("Name of country")
+          ]),
+          _vm._v(" "),
+          _vm._l(_vm.countries, function(country, index) {
+            return _c("option", { key: index }, [
+              _vm._v(_vm._s(country.countryName))
+            ])
+          })
+        ],
+        2
+      )
     ]),
     _vm._v(" "),
     _c("br"),
     _c("br"),
     _vm._v(" "),
     _c("h2", [
-      _vm._v("I am a successful "),
-      _c("input", {
-        attrs: { type: "number", id: "preferedName", placeholder: "Age" }
-      }),
-      _vm._v(" year old "),
+      _vm._v("\n    I am a successful\n    "),
+      _c("input", { attrs: { type: "number", id: "age", placeholder: "Age" } }),
+      _vm._v(" year old\n    "),
       _c("select", {}, [
         _c("option", { attrs: { selected: "" } }, [_vm._v("Gender dropdown")])
       ]),
-      _vm._v(" with a "),
+      _vm._v("\n    with a\n    "),
       _c("select", {}, [
         _c("option", { attrs: { selected: "" } }, [_vm._v("Education level")])
       ]),
-      _vm._v(" level education.")
+      _vm._v("\n    level education.\n  ")
     ]),
     _vm._v(" "),
     _c("br"),
     _c("br"),
     _vm._v(" "),
     _c("h2", [
-      _vm._v("I am "),
+      _vm._v("\n    I am\n    "),
       _c("select", {}, [
         _c("option", { attrs: { selected: "" } }, [_vm._v("Status dropdown")])
       ]),
-      _vm._v(" with "),
+      _vm._v("\n    with\n    "),
       _c("input", {
-        attrs: { type: "number", id: "preferedName", placeholder: "#" }
+        attrs: { type: "number", id: "children", placeholder: "#" }
       }),
-      _vm._v(" beautiful kids. I work in a "),
+      _vm._v(" beautiful\n    kids. I work in a\n    "),
       _c("select", {}, [
         _c("option", { attrs: { selected: "" } }, [_vm._v("Roles dropdown")])
       ]),
-      _vm._v(" role.")
+      _vm._v("\n    role.\n  ")
     ]),
     _vm._v(" "),
     _c("br"),
     _c("br"),
     _vm._v(" "),
     _c("h2", [
-      _vm._v("I earn primarily in "),
+      _vm._v("\n    I earn primarily in\n    "),
       _c("select", {}, [
         _c("option", { attrs: { selected: "" } }, [_vm._v("currency dropdown")])
       ]),
-      _vm._v(".")
+      _vm._v(".\n  ")
     ]),
     _vm._v(" "),
     _c("br"),
@@ -14463,7 +15679,7 @@ var render = function() {
           }
         }
       },
-      [_vm._v("LET'S GET YOUR GOALS SET UP")]
+      [_vm._v("\n    LET'S GET YOUR GOALS SET UP\n  ")]
     )
   ])
 }
