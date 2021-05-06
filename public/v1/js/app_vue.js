@@ -2162,6 +2162,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {// console.log('Component mounted.')
   },
@@ -2301,7 +2303,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n.push[data-v-b2ef52b6]{\n  padding-top: 100px;\n}\n.welcome-component[data-v-b2ef52b6]{\n  height: 100vh;\n  max-width: 768px;\n  margin: auto;\n}\n.welcome-message[data-v-b2ef52b6]{\n  padding: 27px;\n}\n.greeting-message[data-v-b2ef52b6]{\n  padding: 27px;\n}\nh1[data-v-b2ef52b6]{\n  font-size: 32px;\n}\nh2[data-v-b2ef52b6]{\n  font-size: 22px;\n}\n", ""]);
+exports.push([module.i, "\n.logo-wrapper[data-v-b2ef52b6]{\n  max-width: 776px;\n}\nimg[data-v-b2ef52b6]{\n  width: 100%;\n}\n.welcome-component[data-v-b2ef52b6]{\n  height: 100vh;\n  max-width: 768px;\n  margin: auto;\n}\n.welcome-message[data-v-b2ef52b6]{\n  padding: 27px;\n}\n.greeting-message[data-v-b2ef52b6]{\n  padding: 27px;\n}\nh1[data-v-b2ef52b6]{\n  font-size: 32px;\n}\nh2[data-v-b2ef52b6]{\n  font-size: 22px;\n}\n@media only screen and (min-device-width: 375px ) {\nh1[data-v-b2ef52b6],h2[data-v-b2ef52b6]{\n    color: #083E5B !important;\n}\n}\n", ""]);
 
 // exports
 
@@ -16997,12 +16999,7 @@ var render = function() {
     },
     [
       _c("div", { staticClass: "m-auto" }, [
-        _c("img", {
-          attrs: {
-            src: "v1/images/budgeting_tool/Budgeting tool.png",
-            alt: "Logo"
-          }
-        }),
+        _vm._m(0),
         _vm._v(" "),
         _c("div", { staticClass: "greeting-message" }, [
           _c("h1", { staticClass: "text-white" }, [
@@ -17010,7 +17007,7 @@ var render = function() {
           ])
         ]),
         _vm._v(" "),
-        _vm._m(0),
+        _vm._m(1),
         _vm._v(" "),
         _c("br"),
         _c("br"),
@@ -17033,6 +17030,19 @@ var render = function() {
   )
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "logo-wrapper" }, [
+      _c("img", {
+        attrs: {
+          src: "v1/images/budgeting_tool/Budgeting tool.png",
+          alt: "Logo"
+        }
+      })
+    ])
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement

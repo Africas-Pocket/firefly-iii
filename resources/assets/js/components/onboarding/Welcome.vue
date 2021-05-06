@@ -1,8 +1,10 @@
 <template>
   <div class="welcome-component row d-flex flex-column justify-content-center align-items-center text-center">
     <div class="m-auto">
-
+      <div class="logo-wrapper">
       <img src="v1/images/budgeting_tool/Budgeting tool.png" alt="Logo"/>
+      </div>
+
       <div class="greeting-message">
         <h1 class="text-white">Hi, {{ name }}</h1>
       </div>
@@ -30,8 +32,11 @@ export default {
 };
 </script>
 <style scoped>
-.push{
-  padding-top: 100px;
+.logo-wrapper{
+  max-width: 776px;
+}
+img{
+  width: 100%;
 }
 .welcome-component{
   height: 100vh;
@@ -50,5 +55,11 @@ h1{
 }
 h2{
   font-size: 22px;
+}
+@media only screen and (min-device-width: 375px ) {
+  h1,h2{
+    color: #083E5B !important;
+  }
+
 }
 </style>

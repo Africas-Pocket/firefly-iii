@@ -31,3 +31,20 @@ body {
     border-radius: 10px;
     color: #7C0225;
 }
+.text-primary{
+    color: #083E5B;
+}
+
+.btn-primary{
+    border-color: #083E5B;
+    background-color: #083E5B;
+}
+.btn-warning{
+    border-color: #FCC455;
+    background-color: #FCC455;
+}
+.text-warning{
+    color: #FCC455;
+}
+
+
