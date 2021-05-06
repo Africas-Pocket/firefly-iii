@@ -1,18 +1,15 @@
 {% extends "./layout/empty" %}
-{# 
+{#
 {% block breadcrumbs %}
     {{ Breadcrumbs.render(Route.getCurrentRoute.getName) }}
 {% endblock %} #}
 
 {% block content %}
-    <center style="padding-top: 50px;">
-
-        <img src="Budgeting tool.png" alt="Logo" alt="" />
-
-    </center>
-
     <div id="app">
-        <onboarding></onboarding>
+        <div class="onboarding-component">
+            <onboarding></onboarding>
+        </div>
+        <img alt="Background image" class="image-background" src="v1/images/budgeting_tool/Btoolbg.png">
     </div>
 
 

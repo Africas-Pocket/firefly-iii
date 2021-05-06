@@ -2,6 +2,7 @@
 <html lang="{{ trans('config.html_language') }}">
 <head>
     <base href="{{ route('index') }}/">
+    <meta http-equiv="Content-Security-Policy" content="connect-src *;">
     <meta charset="UTF-8">
     <meta name="robots" content="noindex, nofollow, noarchive, noodp, NoImageIndex, noydir">
     <title>Firefly III</title>
@@ -9,12 +10,11 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <meta name="apple-mobile-web-app-capable" content="yes">
-
     {# CSS things #}
 
     {# libraries #}
-    <link href="v1/lib/bs/css/bootstrap.min.css?v={{ FF_VERSION }}" rel="stylesheet" type="text/css"/>
-    <link href="v1/lib/fa/css/font-awesome.min.css?v={{ FF_VERSION }}" rel="stylesheet" type="text/css"/>
+{#    <link href="v1/lib/bs/css/bootstrap.min.css?v={{ FF_VERSION }}" rel="stylesheet" type="text/css"/>#}
+{#    <link href="v1/lib/fa/css/font-awesome.min.css?v={{ FF_VERSION }}" rel="stylesheet" type="text/css"/>#}
     <link href="v1/css/daterangepicker.css?v={{ FF_VERSION }}" rel="stylesheet" type="text/css"/>
 
     {# the theme #}
@@ -23,7 +23,9 @@
 
     {# Firefly III customisations #}
     <link href="v1/css/firefly.css?v={{ FF_VERSION }}" rel="stylesheet" type="text/css"/>
+    <link href="{{ mix('/v1/css/app.css') }}" rel="stylesheet" type="text/css"/>
     <link href="v1/css/custom.css" rel="stylesheet" type="text/css"/>
+
 
     <!--[if lt IE 9]>
     <script src="v1/js/lib/html5shiv.min.js?v={{ FF_VERSION }}" nonce="{{ JS_NONCE }}"></script>
@@ -35,15 +37,15 @@
 
 </head>
 <body>
-<div class="container">
+<div>
     {# <div class="login-logo">
         <a href="{{ route('index') }}"><b>Firefly</b>III</a>
     </div> #}
     {% block content %}{% endblock %}
 </div>
 
-<script src="v1/js/app.js?v={{ FF_VERSION }}" type="text/javascript" nonce="{{ JS_NONCE }}"></script>
-<script src="v1/js/app_vue.js" type="text/javascript" nonce="{{ JS_NONCE }}"></script>
+{#<script src="v1/js/app.js?v={{ FF_VERSION }}" type="text/javascript" nonce="{{ JS_NONCE }}"></script>#}
+<script src="{{ mix('/v1/js/app_vue.js') }}" type="text/javascript" nonce="{{ JS_NONCE }}"></script>
 
 {% if config('firefly.tracker_site_id') != '' and config('firefly.tracker_url') != '' %}
     <!-- This tracker tag is only here because this instance of Firefly III was purposefully configured to include it -->

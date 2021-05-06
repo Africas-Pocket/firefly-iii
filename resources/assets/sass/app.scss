@@ -20,10 +20,11 @@
 
 /* TODO REMOVE ME */
 // Variables
-//@import "variables";
+@import "variables";
 
 // Bootstrap
-//@import "~bootstrap-sass/assets/stylesheets/bootstrap";
+//@import "~bootstrap-sass/assets/stylesheets/bootstrap.scss";
+@import "~bootstrap/dist/css/bootstrap.min.css";
 
 // Font awesome
-//@import "~font-awesome/css/font-awesome";
+@import "~font-awesome/css/font-awesome";
