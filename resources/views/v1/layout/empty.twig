@@ -23,6 +23,7 @@
 
     {# Firefly III customisations #}
     <link href="v1/css/firefly.css?v={{ FF_VERSION }}" rel="stylesheet" type="text/css" nonce="{{ JS_NONCE }}">
+    <link href="v1/css/custom.css" rel="stylesheet" type="text/css"/>
 
     <!--[if lt IE 9]>
     <script src="v1/js/lib/html5shiv.min.js?v={{ FF_VERSION }}" nonce="{{ JS_NONCE }}"></script>
@@ -33,15 +34,16 @@
     {% include('v1.partials.favicons') %}
 
 </head>
-<body class="login-page">
-<div class="login-box">
-    <div class="login-logo">
+<body>
+<div class="container">
+    {# <div class="login-logo">
         <a href="{{ route('index') }}"><b>Firefly</b>III</a>
-    </div>
+    </div> #}
     {% block content %}{% endblock %}
 </div>
 
 <script src="v1/js/app.js?v={{ FF_VERSION }}" type="text/javascript" nonce="{{ JS_NONCE }}"></script>
+<script src="v1/js/app_vue.js" type="text/javascript" nonce="{{ JS_NONCE }}"></script>
 
 {% if config('firefly.tracker_site_id') != '' and config('firefly.tracker_url') != '' %}
     <!-- This tracker tag is only here because this instance of Firefly III was purposefully configured to include it -->

@@ -24,7 +24,7 @@ declare(strict_types=1);
 use FireflyIII\Support\Facades\Telemetry;
 
 return [
-    'name'            => envNonEmpty('APP_NAME', 'Firefly III'),
+    'name'            => envNonEmpty('APP_NAME', 'Budgeting Tool'),
     'env'             => envNonEmpty('APP_ENV', 'local'),
     'debug'           => env('APP_DEBUG', false),
     'url'             => envNonEmpty('APP_URL', 'http://localhost'),
@@ -64,6 +64,8 @@ return [
         /*
          * Package Service Providers...
          */
+        Laravel\Socialite\SocialiteServiceProvider::class,
+        \SocialiteProviders\Manager\ServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -150,6 +152,7 @@ return [
         'Arr' => Illuminate\Support\Arr::class,
         'Http' => Illuminate\Support\Facades\Http::class,
         'Str' => Illuminate\Support\Str::class,
+        'Socialite' => Laravel\Socialite\Facades\Socialite::class,
     ],
 
     'asset_url' => env('ASSET_URL', null),

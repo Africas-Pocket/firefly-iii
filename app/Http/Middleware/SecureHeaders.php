@@ -52,9 +52,9 @@ class SecureHeaders
         $trackingScriptSrc = $this->getTrackingScriptSource();
         $csp               = [
             "default-src 'none'",
-            "object-src 'none'",
-            sprintf("script-src 'unsafe-eval' 'strict-dynamic' 'self' 'unsafe-inline' 'nonce-%1s' %2s", $nonce, $trackingScriptSrc),
-            "style-src 'unsafe-inline' 'self'",
+            "object-src 'self'",
+            sprintf("script-src 'self' 'unsafe-inline' 'unsafe-eval' 'nonce-%1s' %2s", $nonce, $trackingScriptSrc),
+            "style-src 'self' 'unsafe-inline'",
             "base-uri 'self'",
             "font-src 'self' data:",
             "connect-src 'self'",

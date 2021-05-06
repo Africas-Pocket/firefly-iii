@@ -35,6 +35,12 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 use Log;
+use Laravel\Socialite\Facades\Socialite;
+use Illuminate\Support\Facades\Auth;
+use FireflyIII\User;
+use Exception;
+use FireflyIII\Http\Controllers\Auth\RegisterController;
+use Illuminate\Support\Env;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -119,6 +125,38 @@ class LoginController extends Controller
         $this->sendFailedLoginResponse($request);
     }
 
+    public function loginWithPassport() 
+    {
+        try {
+    
+            $user = Socialite::driver('laravelpassport')->user();
+            $isUser = User::where('ap_id', $user->id)->first();
+     
+            if($isUser){
+                Auth::login($isUser);
+                return redirect(RouteServiceProvider::HOME);
+            }else{
+                $createUser = User::create([
+                    'name' => $user->name,
+                    'email' => $user->email,
+                    'ap_id' => $user->id,
+                    'password' => bcrypt(random_bytes(16))
+                ]);
+    
+                Auth::login($createUser);
+                return redirect(RouteServiceProvider::HOME);
+            }
+    
+        } catch (Exception $exception) {
+            dd($exception->getMessage());
+        }
+    }
+    
+    public function apRedirect()
+    {
+        return Socialite::driver('laravelpassport')->redirect();
+    }
+
     /**
      * Log the user out of the application.
      *
@@ -151,9 +189,8 @@ class LoginController extends Controller
             return $response;
         }
 
-        return $request->wantsJson()
-            ? new \Illuminate\Http\Response('', 204)
-            : redirect('/');
+        $loginchoice = Env::get('APP_ENV') == 'local' ? 'auth.login' : 'auth.newlogin';
+        return view('auth.login', compact('allowRegistration', 'email', 'remember', 'allowReset', 'title'));
     }
 
     /**

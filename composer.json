@@ -92,6 +92,7 @@
     "jc5/recovery": "^2",
     "laravel/framework": "^8.0",
     "laravel/passport": "10.*",
+    "laravel/socialite": "^5.2",
     "laravel/ui": "^3.0",
     "laravelcollective/html": "6.*",
     "league/commonmark": "1.*",
@@ -101,6 +102,7 @@
     "predis/predis": "^1.1",
     "ramsey/uuid": "^4.1",
     "rcrowe/twigbridge": "^0.12.1",
+    "socialiteproviders/laravelpassport": "^4.1"
     "spatie/data-transfer-object": "^2.8"
   },
   "require-dev": {
