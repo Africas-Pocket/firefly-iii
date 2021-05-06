@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="text-center">
 
     <div class="greeting-message">
       <h1 class="text-white">Hi, {{ name }}</h1>

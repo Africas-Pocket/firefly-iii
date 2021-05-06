@@ -1361,6 +1361,7 @@ export default {
 .basics-component{
   width: 100%;
   margin: 24px;
+  text-align: center;
 }
 .input-paragraph{
   max-width: 1029px;

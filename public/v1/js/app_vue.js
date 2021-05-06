@@ -2065,35 +2065,33 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {// console.log('Component mounted.')
   },
   computed: {},
   data: function data() {
-    return {};
+    return {
+      moneyGoals: [{
+        id: 0,
+        title: "track your spending"
+      }, {
+        id: 1,
+        title: "save an emergency fund",
+        subtitle: "3-6 months of your living expenses"
+      }, {
+        id: 1,
+        title: "save an emergency fund",
+        subtitle: "3-6 months of your living expenses"
+      }, {
+        id: 1,
+        title: "save an emergency fund",
+        subtitle: "3-6 months of your living expenses"
+      }, {
+        id: 1,
+        title: "save an emergency fund",
+        subtitle: "3-6 months of your living expenses"
+      }]
+    };
   }
 });
 
@@ -2152,7 +2150,7 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       name: "Isaac",
-      intCurrentStep: 1
+      intCurrentStep: 2
     };
   }
 });
@@ -2227,7 +2225,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n.basics-component[data-v-05a821dc]{\n  width: 100%;\n  margin: 24px;\n}\n.input-paragraph[data-v-05a821dc]{\n  max-width: 1029px;\n  width: 100%;\n  background: #FFFFFF;\n  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);\n  border-radius: 10px;\n}\ninput[data-v-05a821dc]:focus{\n  border-width: 0 2px 2px 2px;\n  border-color: #0a53be;\n  border-style: solid;\n}\ninput[data-v-05a821dc],select[data-v-05a821dc]{\n  border: none;\n  border-bottom: 2px solid #0a53be;\n  text-align: center;\n}\n", ""]);
+exports.push([module.i, "\n.basics-component[data-v-05a821dc]{\n  width: 100%;\n  margin: 24px;\n  text-align: center;\n}\n.input-paragraph[data-v-05a821dc]{\n  max-width: 1029px;\n  width: 100%;\n  background: #FFFFFF;\n  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);\n  border-radius: 10px;\n}\ninput[data-v-05a821dc]:focus{\n  border-width: 0 2px 2px 2px;\n  border-color: #0a53be;\n  border-style: solid;\n}\ninput[data-v-05a821dc],select[data-v-05a821dc]{\n  border: none;\n  border-bottom: 2px solid #0a53be;\n  text-align: center;\n}\n", ""]);
 
 // exports
 
@@ -2303,7 +2301,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n.push[data-v-5b979fed]{\n  padding-top: 100px;\n}\n", ""]);
+exports.push([module.i, "\n.money-goal-component[data-v-5b979fed]{\n  width: 100%;\n  text-align: center;\n  margin: 24px;\n}\n.money-goal-wrapper[data-v-5b979fed]{\n\n  max-width: 1029px;\n  width: 100%;\n  background: #FFFFFF;\n  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);\n  border-radius: 10px;\n}\n.money-goal-item[data-v-5b979fed]{\n  display: block;\n  padding: 15px;\n  text-align: center;\n  max-width: 646px;\n  margin-bottom: 48px;\n  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);\n  border-radius: 20px;\n  min-width: 105px;\n}\n.money-goal-item .goal-title[data-v-5b979fed]{\n  color: #7C0225;\n  text-transform: uppercase;\n}\n.money-goal-item .goal-subtitle[data-v-5b979fed]{\n  color: #083E5B;\n  font-style: italic;\n}\n\n", ""]);
 
 // exports
 
@@ -16938,112 +16936,85 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("center", { staticClass: "push" }, [
-    _c("h1", [_vm._v("WHAT ARE YOUR MONEY GOALS?")]),
-    _vm._v(" "),
-    _c("br"),
-    _vm._v(" "),
-    _c("p", [_vm._v("Pick all that apply")]),
-    _vm._v(" "),
-    _c("br"),
-    _vm._v(" "),
-    _c("div", { staticClass: "form-check" }, [
-      _c("input", {
-        staticClass: "form-check-input",
-        attrs: { type: "checkbox", value: "", id: "defaultCheck1" }
-      }),
+  return _c("div", { staticClass: "money-goal-component" }, [
+    _c("div", { staticClass: "m-auto" }, [
+      _vm._m(0),
       _vm._v(" "),
       _c(
-        "label",
-        { staticClass: "form-check-label", attrs: { for: "defaultCheck1" } },
-        [_vm._v("\n      TRACK YOUR SPENDING\n    ")]
+        "div",
+        { staticClass: "money-goal-wrapper p-4" },
+        _vm._l(_vm.moneyGoals, function(moneyGoal) {
+          return _c("div", { staticClass: "btn btn-warning money-goal-item" }, [
+            _c("h1", { staticClass: "goal-title text-uppercase" }, [
+              _vm._v(_vm._s(moneyGoal.title))
+            ]),
+            _vm._v(" "),
+            moneyGoal.subtitle
+              ? _c("p", { staticClass: "goal-subtitle" }, [
+                  _vm._v(_vm._s(moneyGoal.subtitle))
+                ])
+              : _vm._e()
+          ])
+        }),
+        0
       )
     ]),
     _vm._v(" "),
-    _c("div", { staticClass: "form-check" }, [
-      _c("input", {
-        staticClass: "form-check-input",
-        attrs: { type: "checkbox", value: "", id: "defaultCheck1" }
-      }),
-      _vm._v(" "),
+    _c("div", { staticClass: "next-button" }, [
       _c(
-        "label",
-        { staticClass: "form-check-label", attrs: { for: "defaultCheck1" } },
-        [_vm._v("\n      SAVE AN EMERGENCY FUND\n    ")]
-      )
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "form-check" }, [
-      _c("input", {
-        staticClass: "form-check-input",
-        attrs: { type: "checkbox", value: "", id: "defaultCheck1" }
-      }),
-      _vm._v(" "),
-      _c(
-        "label",
-        { staticClass: "form-check-label", attrs: { for: "defaultCheck1" } },
-        [_vm._v("\n      INVEST FOR A FUTURE GOAL\n    ")]
-      )
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "form-check" }, [
-      _c("input", {
-        staticClass: "form-check-input",
-        attrs: { type: "checkbox", value: "", id: "defaultCheck1" }
-      }),
-      _vm._v(" "),
-      _c(
-        "label",
-        { staticClass: "form-check-label", attrs: { for: "defaultCheck1" } },
-        [_vm._v("\n      PLAN FOR RETIREMENT\n    ")]
-      )
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "form-check" }, [
-      _c("input", {
-        staticClass: "form-check-input",
-        attrs: { type: "checkbox", value: "", id: "defaultCheck1" }
-      }),
-      _vm._v(" "),
-      _c(
-        "label",
-        { staticClass: "form-check-label", attrs: { for: "defaultCheck1" } },
-        [_vm._v("\n      BUILD WEALTH\n    ")]
-      )
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "form-check" }, [
-      _c("input", {
-        staticClass: "form-check-input",
-        attrs: { type: "checkbox", value: "", id: "defaultCheck1" }
-      }),
-      _vm._v(" "),
-      _c(
-        "label",
-        { staticClass: "form-check-label", attrs: { for: "defaultCheck1" } },
-        [_vm._v("\n      PAY OFF DEBT\n    ")]
-      )
-    ]),
-    _vm._v(" "),
-    _c("br"),
-    _c("br"),
-    _vm._v(" "),
-    _c(
-      "button",
-      {
-        staticClass: "btn btn-lg btn-warning",
-        attrs: { type: "button" },
-        on: {
-          click: function($event) {
-            return _vm.$emit("progress", 1)
+        "button",
+        {
+          staticClass: "btn float-right btn-lg btn-primary",
+          attrs: { type: "button" },
+          on: {
+            click: function($event) {
+              return _vm.$emit("progress", 1)
+            }
           }
-        }
-      },
-      [_vm._v("->")]
-    )
+        },
+        [
+          _vm._v("Next "),
+          _c("i", { staticClass: "fa text-warning fa-arrow-right" })
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "btn float-left btn-lg btn-primary",
+          attrs: { type: "button" },
+          on: {
+            click: function($event) {
+              return _vm.$emit("progress", 1)
+            }
+          }
+        },
+        [
+          _vm._v("Next "),
+          _c("i", { staticClass: "fa text-warning fa-arrow-right" })
+        ]
+      )
+    ])
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "page-header py-4" }, [
+      _c("h1", { staticClass: "text-primary" }, [
+        _vm._v("WHAT ARE YOUR MONEY GOALS?")
+      ]),
+      _vm._v(" "),
+      _c("div", [
+        _c("p", { staticClass: "text-primary" }, [
+          _vm._v("Pick all that apply")
+        ])
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -17172,7 +17143,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
+  return _c("div", { staticClass: "text-center" }, [
     _c("div", { staticClass: "greeting-message" }, [
       _c("h1", { staticClass: "text-white" }, [
         _vm._v("Hi, " + _vm._s(_vm.name))

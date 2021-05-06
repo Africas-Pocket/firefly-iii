@@ -32,7 +32,7 @@ export default {
   data() {
     return {
       name: "Isaac",
-      intCurrentStep: 1
+      intCurrentStep: 2
     };
   },
 };
