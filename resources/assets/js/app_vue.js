@@ -24,7 +24,7 @@
 import Vue from 'vue';
 import VueI18n from 'vue-i18n'
 import * as uiv from 'uiv';
-
+import vSelect from 'vue-select'
 import Onboarding from './components/onboarding/Onboarding.vue'
 
 
@@ -33,6 +33,7 @@ window.uiv = uiv;
 Vue.use(vuei18n);
 Vue.use(uiv);
 window.Vue = Vue;
+Vue.component('v-select', vSelect)
 
 const app = new Vue({
     el: '#app',

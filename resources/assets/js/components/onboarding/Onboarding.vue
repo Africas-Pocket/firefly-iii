@@ -2,7 +2,7 @@
   <div>
 
       <div class="m-auto">
-        <div class="logo-wrapper">
+        <div class="logo-wrapper py-5">
           <img src="v1/images/budgeting_tool/Budgeting tool.png" alt="Logo"/>
         </div>
         <Welcome v-if="intCurrentStep == 0" v-on:progress="intCurrentStep += $event"></Welcome>
@@ -32,7 +32,7 @@ export default {
   data() {
     return {
       name: "Isaac",
-      intCurrentStep: 0
+      intCurrentStep: 1
     };
   },
 };
