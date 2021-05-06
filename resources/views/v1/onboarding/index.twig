@@ -12,6 +12,8 @@
             background-size: cover;
             background-repeat: no-repeat;
             background-position: left;
+            min-height: 100vh;
+            height: 100%;
             background-image: url("{{ asset('/v1/images/budgeting_tool/Btoolbg.png') }}");
         }
         footer{
@@ -30,7 +32,7 @@
 
     </style>
     <div id="app">
-        <div class="onboarding-component">
+        <div class="onboarding-component d-flex flex-column justify-content-center align-items-center text-center">
             <onboarding></onboarding>
         </div>
     </div>

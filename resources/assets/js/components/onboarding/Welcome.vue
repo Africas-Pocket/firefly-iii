@@ -1,21 +1,16 @@
 <template>
-  <div class="welcome-component row d-flex flex-column justify-content-center align-items-center text-center">
-    <div class="m-auto">
-      <div class="logo-wrapper">
-      <img src="v1/images/budgeting_tool/Budgeting tool.png" alt="Logo"/>
-      </div>
+  <div>
 
-      <div class="greeting-message">
-        <h1 class="text-white">Hi, {{ name }}</h1>
-      </div>
-      <div class="welcome-message">
-        <h2 class="text-white">Let's make a few selections so we  can give you an experience that works for you</h2>
-      </div>
-      <br><br>
-      <button type="button" class="btn btn-lg btn-warning onboarding-next-button" v-on:click="$emit('progress', 1)">
-        CUSTOMIZE YOUR EXPERIENCE</button>
-
+    <div class="greeting-message">
+      <h1 class="text-white">Hi, {{ name }}</h1>
     </div>
+    <div class="welcome-message">
+      <h2 class="text-white">Let's make a few selections so we  can give you an experience that works for you</h2>
+    </div>
+    <br><br>
+    <button type="button" class="btn btn-lg btn-warning onboarding-next-button" v-on:click="$emit('progress', 1)">
+      CUSTOMIZE YOUR EXPERIENCE</button>
+
   </div>
 </template>
 <script>
@@ -32,17 +27,8 @@ export default {
 };
 </script>
 <style scoped>
-.logo-wrapper{
-  max-width: 776px;
-}
 img{
   width: 100%;
-}
-.welcome-component{
-  height: 100vh;
-  max-width: 768px;
-  margin: auto;
-
 }
 .welcome-message{
   padding: 27px;

@@ -1,12 +1,18 @@
 <template>
   <div>
-    <Welcome v-if="intCurrentStep == 0" v-on:progress="intCurrentStep += $event"></Welcome>
-    <Basics v-if="intCurrentStep == 1" v-on:progress="intCurrentStep += $event"></Basics>
-    <MoneyGoals v-if="intCurrentStep == 2" v-on:progress="intCurrentStep += $event"></MoneyGoals>
-    <Accounts v-if="intCurrentStep == 3" v-on:progress="intCurrentStep += $event"></Accounts>
-    <Income v-if="intCurrentStep == 4" v-on:progress="intCurrentStep += $event"></Income>
-    <Expenses v-if="intCurrentStep == 5" v-on:progress="intCurrentStep += $event"></Expenses>
-  </div> 
+
+      <div class="m-auto">
+        <div class="logo-wrapper">
+          <img src="v1/images/budgeting_tool/Budgeting tool.png" alt="Logo"/>
+        </div>
+        <Welcome v-if="intCurrentStep == 0" v-on:progress="intCurrentStep += $event"></Welcome>
+        <Basics v-if="intCurrentStep == 1" v-on:progress="intCurrentStep += $event"></Basics>
+        <MoneyGoals v-if="intCurrentStep == 2" v-on:progress="intCurrentStep += $event"></MoneyGoals>
+        <Accounts v-if="intCurrentStep == 3" v-on:progress="intCurrentStep += $event"></Accounts>
+        <Income v-if="intCurrentStep == 4" v-on:progress="intCurrentStep += $event"></Income>
+        <Expenses v-if="intCurrentStep == 5" v-on:progress="intCurrentStep += $event"></Expenses>
+      </div>
+  </div>
 </template>
 <script>
 import Welcome from './Welcome.vue'
@@ -32,7 +38,5 @@ export default {
 };
 </script>
 <style scoped>
-.push{
-  padding-top: 100px;
-}
+
 </style>

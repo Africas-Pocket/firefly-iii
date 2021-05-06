@@ -1,69 +1,72 @@
 <template>
-  <center class="push">
-    <h1>LET'S START WITH THE BASICS</h1>
-    <br />
-    <p>
-      This will help us recommend useful investment opportunities to you based
-      on your profile.
-    </p>
-    <br />
-    <h2>
-      My preferred name is
-      <input type="text" class="" id="preferedName" placeholder="" />. I
-      currently live in
-      <select class="">
-        <option selected disabled>Name of country</option>
-        <option v-for="country, index in countries" :key="index">{{country.countryName}}</option>
-      </select>
-      and I'm originally from
-      <select class="">
-        <option selected disabled>Name of country</option>
-        <option v-for="country, index in countries" :key="index">{{country.countryName}}</option>
-      </select>
-    </h2>
-    <br /><br />
-    <h2>
-      I am a successful
-      <input type="number" class="" id="age" placeholder="Age" /> year old
-      <select class="">
-        <option selected>Gender dropdown</option>
-      </select>
-      with a
-      <select class="">
-        <option selected>Education level</option>
-      </select>
-      level education.
-    </h2>
-    <br /><br />
-    <h2>
-      I am
-      <select class="">
-        <option selected>Status dropdown</option>
-      </select>
-      with
-      <input type="number" class="" id="children" placeholder="#" /> beautiful
-      kids. I work in a
-      <select class="">
-        <option selected>Roles dropdown</option>
-      </select>
-      role.
-    </h2>
-    <br /><br />
-    <h2>
-      I earn primarily in
-      <select class="">
-        <option selected>currency dropdown</option></select
-      >.
-    </h2>
-    <br /><br />
-    <button
-      type="button"
-      class="btn btn-lg btn-warning"
-      v-on:click="$emit('progress', 1)"
-    >
-      LET'S GET YOUR GOALS SET UP
-    </button>
-  </center>
+  <div class="basics-component">
+
+      <h1 class="text-primary">LET'S START WITH THE BASICS</h1>
+      <br />
+      <div class="p-4">
+        <p class="text-primary">
+          This will help us recommend useful investment opportunities to you based
+          on your profile.
+        </p>
+      </div>
+      <br />
+      <h2>
+        My preferred name is
+        <input type="text" class="" id="preferedName" placeholder="" />. I
+        currently live in
+        <select class="">
+          <option selected disabled>Name of country</option>
+          <option v-for="country, index in countries" :key="index">{{country.countryName}}</option>
+        </select>
+        and I'm originally from
+        <select class="">
+          <option selected disabled>Name of country</option>
+          <option v-for="country, index in countries" :key="index">{{country.countryName}}</option>
+        </select>
+      </h2>
+      <br /><br />
+      <h2>
+        I am a successful
+        <input type="number" class="" id="age" placeholder="Age" /> year old
+        <select class="">
+          <option selected>Gender dropdown</option>
+        </select>
+        with a
+        <select class="">
+          <option selected>Education level</option>
+        </select>
+        level education.
+      </h2>
+      <br /><br />
+      <h2>
+        I am
+        <select class="">
+          <option selected>Status dropdown</option>
+        </select>
+        with
+        <input type="number" class="" id="children" placeholder="#" /> beautiful
+        kids. I work in a
+        <select class="">
+          <option selected>Roles dropdown</option>
+        </select>
+        role.
+      </h2>
+      <br /><br />
+      <h2>
+        I earn primarily in
+        <select class="">
+          <option selected>currency dropdown</option></select
+        >.
+      </h2>
+      <br /><br />
+      <button
+          type="button"
+          class="btn btn-lg btn-warning"
+          v-on:click="$emit('progress', 1)"
+      >
+        LET'S GET YOUR GOALS SET UP
+      </button>
+  </div>
 </template>
 <script>
 export default {
@@ -1339,11 +1342,8 @@ export default {
 };
 </script>
 <style scoped>
-.push {
-  padding-top: 100px;
+.basics-component{
+  background-color: white;
 }
 
-body {
-  background-image: none;
-}
 </style>

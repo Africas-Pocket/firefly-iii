@@ -12,19 +12,19 @@
     color: #7C0225;
 }
 .text-primary{
-    color: #083E5B;
+    color: #083E5B !important;
 }
 
 .btn-primary{
-    border-color: #083E5B;
-    background-color: #083E5B;
+    border-color: #083E5B !important;
+    background-color: #083E5B !important;
 }
 .btn-warning{
-    border-color: #FCC455;
-    background-color: #FCC455;
+    border-color: #FCC455 !important;
+    background-color: #FCC455 !important;
 }
 .text-warning{
-    color: #FCC455;
+    color: #FCC455 !important;
 }
 footer{
     position: absolute;
