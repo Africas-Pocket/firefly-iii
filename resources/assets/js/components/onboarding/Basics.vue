@@ -9,51 +9,69 @@
     <br />
     <h2>
       My preferred name is
-      <input type="text" class="" id="preferedName" placeholder="" />. I
+      <input type="text" class="" id="preferedName" placeholder="" v-model="preferredName" />. I
       currently live in
-      <select class="">
-        <option selected disabled>Name of country</option>
+      <select class="" v-model="livingCountry">
+        <option selected>Name of country</option>
         <option v-for="country, index in countries" :key="index">{{country.countryName}}</option>
       </select>
       and I'm originally from
-      <select class="">
-        <option selected disabled>Name of country</option>
+      <select class="" v-model="originCountry">
+        <option selected>Name of country</option>
         <option v-for="country, index in countries" :key="index">{{country.countryName}}</option>
       </select>
     </h2>
     <br /><br />
     <h2>
       I am a successful
-      <input type="number" class="" id="age" placeholder="Age" /> year old
-      <select class="">
+      <input type="number" class="" id="age" placeholder="Age" v-model="age" /> year old
+      <select class="" v-model="gender">
         <option selected>Gender dropdown</option>
+        <option>Male</option>
+        <option>Female</option>
+        <option>Prefer not to say</option>
       </select>
       with a
-      <select class="">
+      <select class="" v-model="educationLevel">
         <option selected>Education level</option>
+        <option>High school</option>
+        <option>Bachelors</option>
+        <option>Masters</option>
+        <option>Post-graduate</option>
       </select>
       level education.
     </h2>
     <br /><br />
     <h2>
       I am
-      <select class="">
+      <select class="" v-model="status">
         <option selected>Status dropdown</option>
+        <option>Single</option>
+        <option>Married</option>
+        <option>Divorced</option>
+        <option>Widow/widower</option>
       </select>
       with
-      <input type="number" class="" id="children" placeholder="#" /> beautiful
+      <input type="number" class="" id="children" placeholder="#" v-model="children" /> beautiful
       kids. I work in a
-      <select class="">
+      <select class="" v-model="role">
         <option selected>Roles dropdown</option>
+        <option>Entry level</option>
+        <option>Mid-management</option>
+        <option>Senior management</option>
+        <option>Self-employed</option>
+        <option>Retired</option>
+        <option>In-between jobs</option>
       </select>
       role.
     </h2>
     <br /><br />
     <h2>
       I earn primarily in
-      <select class="">
-        <option selected>currency dropdown</option></select
-      >.
+      <select class="" v-model="currency">
+        <option selected>currency dropdown</option>
+        <option v-for="country, index in countries" :key="index">{{country.currencyCode}}</option>
+      </select>
     </h2>
     <br /><br />
     <button
@@ -1332,8 +1350,11 @@ export default {
       gender: "",
       educationLevel: "",
       status: "",
+      role: "",
+      currency: "",
+      children: 0,
       roles: [],
-      currencies: []
+      // currencies: []
     };
   },
 };

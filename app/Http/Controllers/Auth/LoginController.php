@@ -190,7 +190,7 @@ class LoginController extends Controller
         }
 
         $loginchoice = Env::get('APP_ENV') == 'local' ? 'auth.login' : 'auth.newlogin';
-        return view('auth.login', compact('allowRegistration', 'email', 'remember', 'allowReset', 'title'));
+        return view($loginchoice, compact('allowRegistration', 'email', 'remember', 'allowReset', 'title'));
     }
 
     /**
