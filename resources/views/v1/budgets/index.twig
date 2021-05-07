@@ -6,45 +6,47 @@
 
 {% block content %}
     <!-- date selector -->
-    <div class="row">
+    <div class="row mx-auto">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <div class="box">
-                <div class="box-header with-border">
-                    <h3 class="box-title">{{ 'budget_period_navigator'|_ }}</h3>
-                </div>
-                <div class="box-body">
-                    <div class="row" id="periodNavigator">
-                        <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
-                            <select class="form-control selectPeriod" name="previous">
-                                <option label="{{ 'select_date'|_ }}" value="x">{{ 'select_date'|_ }}</option>
-                                {% for array in prevLoop %}
-                                    <option label="{{ array.title }}" value="{{ array.label }}" data-start="{{ array.start.format('Y-m-d') }}"
-                                            data-end="{{ array.end.format('Y-m-d') }}">{{ array.title }}</option>
-                                {% endfor %}
-                            </select>
+           
+            {# <div class="box-header with-border">
+                <h3 class="box-title">{{ 'budget_period_navigator'|_ }}</h3>
+            </div> #}
+            <div class="box-body">
+                <div class="btn-toolbar" id="periodNavigator" role="toolbar" aria-label="Toolbar with button groups">
+                    <div class="btn-group ml-auto" role="group" aria-label="First group">
+                        <select class="form-control selectPeriod" name="previous">
+                            <option label="{{ 'select_date'|_ }}" value="x">{{ 'select_date'|_ }}</option>
+                            {% for array in prevLoop %}
+                                <option label="{{ array.title }}" value="{{ array.label }}" data-start="{{ array.start.format('Y-m-d') }}"
+                                        data-end="{{ array.end.format('Y-m-d') }}">{{ array.title }}</option>
+                            {% endfor %}
+                        </select>
+
+                    </div>
+                    <div class="btn-group ml-auto" role="group" aria-label="Second group">
+                        <div class="btn btn-group btn-group-lg" style="padding-top:0;">
+                            <a href="{{ route('budgets.index', [prevLoop[0].start.format('Y-m-d'), prevLoop[0].end.format('Y-m-d')]) }}"
+                               class="btn btn-default" title="{{ prevLoop[0].title }}">&larr;</a>
+                            <a title="{{ start.formatLocalized(monthAndDayFormat) }} - {{ end.formatLocalized(monthAndDayFormat) }}"
+                               href="{{ route('budgets.index', [start.format('Y-m-d'), end.format('Y-m-d')]) }}"
+                               class="btn btn-default">{{ periodTitle }}</a>
+                            <a href="{{ route('budgets.index', [nextLoop[0].start.format('Y-m-d'), nextLoop[0].end.format('Y-m-d')]) }}"
+                               class="btn btn-default" title="{{ nextLoop[0].title }}">&rarr;</a>
                         </div>
-                        <div class="col-lg-8 col-md-4 col-sm-12 col-xs-12 text-center">
-                            <div class="btn btn-group btn-group-lg" style="padding-top:0;">
-                                <a href="{{ route('budgets.index', [prevLoop[0].start.format('Y-m-d'), prevLoop[0].end.format('Y-m-d')]) }}"
-                                   class="btn btn-default" title="{{ prevLoop[0].title }}">&larr;</a>
-                                <a title="{{ start.formatLocalized(monthAndDayFormat) }} - {{ end.formatLocalized(monthAndDayFormat) }}"
-                                   href="{{ route('budgets.index', [start.format('Y-m-d'), end.format('Y-m-d')]) }}"
-                                   class="btn btn-default">{{ periodTitle }}</a>
-                                <a href="{{ route('budgets.index', [nextLoop[0].start.format('Y-m-d'), nextLoop[0].end.format('Y-m-d')]) }}"
-                                   class="btn btn-default" title="{{ nextLoop[0].title }}">&rarr;</a>
-                            </div>
-                        </div>
-                        <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12 text-right">
-                            <select class="form-control selectPeriod" name="next">
-                                <option label="{{ 'select_date'|_ }}" value="x">{{ 'select_date'|_ }}</option>
-                                {% for array in nextLoop %}
-                                    <option label="{{ array.title }}" value="{{ array.label }}" data-start="{{ array.start.format('Y-m-d') }}"
-                                            data-end="{{ array.end.format('Y-m-d') }}">{{ array.title }}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
+
+                    </div>
+                    <div class="btn-group ml-auto" role="group" aria-label="Third group">
+                        <select class="form-control selectPeriod" name="next">
+                            <option label="{{ 'select_date'|_ }}" value="x">{{ 'select_date'|_ }}</option>
+                            {% for array in nextLoop %}
+                                <option label="{{ array.title }}" value="{{ array.label }}" data-start="{{ array.start.format('Y-m-d') }}"
+                                        data-end="{{ array.end.format('Y-m-d') }}">{{ array.title }}</option>
+                            {% endfor %}
+                        </select>
                     </div>
                 </div>
+            
             </div>
         </div>
     </div>
@@ -111,7 +113,7 @@
         <div class="row">
             {% for budget in availableBudgets %}
                 <div class="col-lg-{{ boxSize }} col-md-12 col-sm-12 col-xs-12">
-                    <div class="box">
+                    <div class="box available-budgets ">
                         <div class="box-header with-border">
                             <h3 class="box-title">
                                 {{ trans('firefly.total_available_budget_in_currency', {currency: budget.transaction_currency.name}) }}
@@ -208,36 +210,28 @@
         {% set shownDemo = true %}
     {% else %}
     
-        <div class="row">
+
+        <div class="row table-responsive">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <div class="box">
+                <div class="box available-budgets">
                     <div class="box-header with-border">
                         <h3 class="box-title">{{ 'budgets'|_ }}</h3>
                     </div>
                     <div class="box-body no-padding">
-                        <div style="padding:8px;">
-                            <a href="{{ route('budgets.create') }}" class="btn btn-success"><i class="fa fa-plus fa-fw"></i> {{ 'createBudget'|_ }}</a>
-                        </div>
                         <table class="table table-bordered sortable-table table-striped sortable" id="budgetList">
                             <thead>
                             <tr>
-                                <th class="hidden-sm hidden-xs" style="width:10%;">&nbsp;</th>
                                 <th>{{ 'budget'|_ }}</th>
                                 <th style="width:25%;">{{ 'budgeted'|_ }}</th>
                                 <th class="hidden-sm hidden-xs">{{ 'spent'|_ }} ({{ 'per_day'|_|lower }})</th>
                                 <th>{{ 'left'|_ }} ({{ 'per_day'|_|lower }})</th>
+                                <th class="hidden-sm hidden-xs" style="width:10%;">&nbsp;</th>
                             </tr>
                             </thead>
                             <tbody>
                             {% for budget in budgets %}
                                 <tr data-id="{{ budget.id }}">
-                                    <td class="hidden-sm hidden-xs">
-                                        <div class="btn-group btn-group-xs">
-                                            <a href="#" class="handle object-handle btn btn-default"><i class="fa fa-fw fa-bars"></i></a>
-                                            <a href="{{ route('budgets.edit', budget.id) }}" class="btn btn-xs btn-default"><i class="fa fa-fw fa-pencil"></i></a>
-                                            <a href="{{ route('budgets.delete', budget.id) }}" class="btn btn-xs btn-danger"><i class="fa fa-fw fa-trash-o"></i></a>
-                                        </div>
-                                    </td>
+                                
                                     <td>
                                         {% if 0 == budget.budgeted|length %}
                                             <a href="{{ route('budgets.show', budget.id) }}" data-id="{{ budget.id }}">{{ budget.name }}</a>
@@ -360,6 +354,13 @@
                                             {% endif %}
                                         {% endfor %}
                                     </td>
+                                    <td class="hidden-sm hidden-xs">
+                                        <div class="btn-group btn-group-xs">
+                                            <a href="#" class="handle object-handle btn btn-default"><i class="fa fa-fw fa-bars"></i></a>
+                                            <a href="{{ route('budgets.edit', budget.id) }}" class="btn btn-xs btn-default"><i class="fa fa-fw fa-pencil"></i></a>
+                                            <a href="{{ route('budgets.delete', budget.id) }}" class="btn btn-xs btn-danger"><i class="fa fa-fw fa-trash-o"></i></a>
+                                        </div>
+                                    </td>
                                 </tr>
                             {% endfor %}
                             </tbody>
@@ -390,8 +391,10 @@
                             </tfoot>
                         </table>
                     </div>
-                    <div class="box-footer">
-                        <a href="{{ route('budgets.create') }}" class="btn btn-success"><i class="fa fa-plus fa-fw"></i> {{ 'createBudget'|_ }}</a>
+                    <div class="row mb-4 text-center">
+
+                        <a href="{{ route('budgets.create') }}"><button type="submit" class="add-btn btn">
+                        <i class="fa fa-plus text-white fa-fw mr-2"></i> {{ 'createBudget'|_ }}</button></a>
                     </div>
                 </div>
             </div>

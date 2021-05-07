@@ -1,6 +1,204 @@
+@import "fonts.css";
+
 body {
     background-image: url("../../Btoolbg.png");
     background-position: center; /* Center the image */
     background-repeat: no-repeat; /* Do not repeat the image */
     background-size: cover;
+    font-family: Alegreya Sans;
+	font-style: normal;
+	font-weight: normal;
+
+}
+
+.skin-blue-light .main-header .navbar, .skin-blue-light .main-header .logo, .skin-blue-light .main-sidebar {
+	background-color: #083E5B;
+}
+
+.skin-blue-light .main-header .logo:hover, .skin-blue-light .main-header .navbar .sidebar-toggle:hover {
+	background-color: #083E5B;
+}
+
+.skin-blue-light .main-header .logo {
+    height: 100%;
+}
+
+
+.skin-blue-light .main-header .logo img {
+    height: 100%; 
+    object-fit:cover; 
+    width: 100%;
+}
+
+.skin-blue-light .main-header .navbar .sidebar-toggle {
+    font-size: 24px;
+}
+
+.main-header .navbar {
+	margin-left: 0px;
+	height: 85px;
+}
+.main-sidebar {
+    padding-top: 90px;
+}
+
+.skin-blue-light .sidebar a {
+	font-family: 'Alegreya Sans', sans-serif;
+    color: #FAC355;
+    font-size: 18px
+}
+
+.skin-blue-light .sidebar-menu>li.header {
+    background: none;
+}
+
+.skin-blue-light .sidebar-menu>li.active>a {
+    color: #fff;
+    background: none;
+}
+
+.custom-header {
+	background-color: #FCC455 !important;
+	padding-bottom: 30px;
+}
+
+.custom-header .breadcrumb  {
+	background: none;
+	font-size: 16px;
+	position: relative;
+	float: none;
+}
+
+.custom-header h1{
+	color: #FFFFFF;
+}
+
+.custom-header h1 .title, .budget-form h1, .goal-form h1 {
+	font-size: 36px;
+	text-transform: uppercase;
+	font-weight: normal;
+}
+
+
+.db-box, .db-your-accounts, .db-card {
+	border-radius: 20px;
+}
+
+.db-box, .available-budgets{
+	border-radius: 10px;
+	background: #fff !important;
+}
+
+.available-budgets .table{
+
+}
+
+.available-budgets .box-header{
+	font-weight: bold;
+	font-size: 24px;
+	text-transform: uppercase;
+	color: #083E5B;
+}
+.available-budgets table thead{
+	background: #E6E7E9;
+}
+.db-box {
+	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+	font-size: 24px;
+	letter-spacing: -0.3px;
+}
+
+.db-box .info-box-text a{
+	color: #7C0225;
+	font-family: Open Sans;
+	font-style: normal;
+	font-weight: bold
+}
+
+.db-box .info-box-text a:hover{
+	color: #7C0225;
+}
+
+.db-box .info-box-content {
+	margin-left: auto;
+}
+
+.db-box .info-box-number{
+	color: #083E5B;
+}
+
+.db-your-accounts {
+	background: #F4F4F4;
+	box-shadow: inset 0px 39px 56px -36px rgba(255, 255, 255, 0.5), inset 0px 7px 11px -4px #FFFFFF, inset 0px 98px 100px -48px rgba(255, 255, 255, 0.9), inset 0px -82px 68px -64px rgba(255, 255, 255, 0.9), inset 0px 1px 40px #FCD382, inset 0px 4px 18px #FAC355;
+}
+
+.db-your-accounts .box-footer, .db-card .box-footer {
+	border: inherit;
+	border-radius: inherit;
+	background: inherit;
+	border-top: 0;
+	border-top-left-radius: 0;
+	border-top-right-radius: 0;
+}
+
+.db-card {
+	background: rgba(255, 255, 255, 0.9);
+	box-shadow: inset 1px 1px 2px rgba(255, 255, 255, 0.3), inset -1px -1px 2px rgba(98, 98, 98, 0.5), inset -4px 4px 8px rgba(98, 98, 98, 0.2), inset 4px -4px 8px rgba(98, 98, 98, 0.2), inset -4px -4px 8px rgba(255, 255, 255, 0.9);
+}
+
+.budget-form, .goal-form {
+	background: #FFFFFF;
+	box-shadow: -4px 4px 8px rgba(102, 102, 102, 0.2), 4px -4px 8px rgba(102, 102, 102, 0.2), -4px -4px 8px rgba(255, 255, 255, 0.9), 4px 4px 10px rgba(102, 102, 102, 0.9), inset 1px 1px 2px rgba(255, 255, 255, 0.3), inset -1px -1px 2px rgba(102, 102, 102, 0.5);
+	border-radius: 15px;
+	margin: 10px 20px;
+	padding: 15px 15px 30px 15px;
+
+}
+
+.budget-form h1, .goal-form h1, {
+	margin-bottom: 15px;
+	color: #083E5B;
+    font-weight: normal;
+}
+
+.budget-form button, .goal-form button {
+	background: #FCC455;
+	box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+	border-radius: 15px;
+	color: #083E5B;
+	font-weight: bold;
+	text-transform: uppercase;
+}
+
+
+.add-btn {
+	background: #FCC455;
+	box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+	border-radius: 15px;
+	color: #083E5B;
+	font-weight: bold;
+	text-transform: uppercase;
+}
+
+#periodNavigator{
+	width: 90%;
+	margin-left: auto;
+}
+
+@media (max-width: 767px){
+	.main-header .logo, .main-header .navbar {
+	    width: auto;
+	}
+}
+
+@media (min-width: 768px){
+	.sidebar-mini.sidebar-collapse .main-header .navbar {
+	    margin-left: 0px;
+	}
+}
+
+@media (device-width: 100vw) {
+	.db-box {
+		margin-top: -30px;
+	}
 }

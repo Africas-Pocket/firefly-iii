@@ -39,6 +39,7 @@
     {% endif %}
 
     {# Any local custom CSS.  #}
+    <link href="v1/css/custom.css" rel="stylesheet" type="text/css"/>
     {% block styles %}{% endblock %}
     <!--[if lt IE 9]>
     <script src="v1/js/lib/html5shiv.min.js?v={{ FF_VERSION }}" nonce="{{ JS_NONCE }}"></script>
@@ -58,17 +59,18 @@
     <header class="main-header">
 
         {# Logo #}
-        <a href="{{ route('index') }}" class="logo">
-            {# mini logo for sidebar mini 50x50 pixels #}
-            <span class="logo-mini">FF</span>
-            {# logo for regular state and mobile devices #}
-            {# <span class="logo-lg"><b>Firefly</b>III</span> #}
-            <img src="Budgeting tool.png" style="height: 100%;">
-        </a>
 
         <nav class="navbar navbar-static-top" role="navigation">
             <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
                 <span class="sr-only">{{ 'toggleNavigation'|_ }}</span>
+            </a>
+            {# Logo #}
+            <a href="{{ route('index') }}" class="logo">
+                {# mini logo for sidebar mini 50x50 pixels #}
+                <span class="logo-mini">FF</span>
+                {# logo for regular state and mobile devices #}
+                {# <span class="logo-lg"><b>Firefly</b>III</span> #}
+                <img class="logo-lg" src="Budgeting tool - White AP logo.png">
             </a>
             <div class="navbar-custom-menu">
                 <ul class="nav navbar-nav">
@@ -113,7 +115,7 @@
     </aside>
 
     <div class="content-wrapper">
-        <section class="content-header">
+        <section class="custom-header content-header">
             {% include('partials.page-header') %}
             {% block breadcrumbs %}{% endblock %}
         </section>
