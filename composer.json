@@ -102,7 +102,7 @@
     "predis/predis": "^1.1",
     "ramsey/uuid": "^4.1",
     "rcrowe/twigbridge": "^0.12.1",
-    "socialiteproviders/laravelpassport": "^4.1"
+    "socialiteproviders/laravelpassport": "^4.1",
     "spatie/data-transfer-object": "^2.8"
   },
   "require-dev": {
