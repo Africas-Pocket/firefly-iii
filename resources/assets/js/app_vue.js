@@ -26,13 +26,15 @@ import VueI18n from 'vue-i18n'
 import * as uiv from 'uiv';
 import vSelect from 'vue-select'
 import Onboarding from './components/onboarding/Onboarding.vue'
-
+import Antd from 'ant-design-vue';
 
 window.vuei18n = VueI18n;
 window.uiv = uiv;
 Vue.use(vuei18n);
 Vue.use(uiv);
 window.Vue = Vue;
+
+Vue.use(Antd);
 Vue.component('v-select', vSelect)
 
 const app = new Vue({

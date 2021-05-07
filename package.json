@@ -27,6 +27,7 @@
         "vue-template-compiler": "^2.6.12"
     },
     "dependencies": {
+        "ant-design-vue": "^1.7.4",
         "bootstrap": "^5.0.0",
         "vue-select": "^3.11.2"
     }
