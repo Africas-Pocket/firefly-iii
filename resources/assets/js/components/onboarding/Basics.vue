@@ -1,5 +1,5 @@
 <template>
-  <div class="basics-component">
+  <div class="basics-component bg-white">
     <div class="elements-wrapper m-auto">
 
       <div class="page-header py-2">
@@ -12,7 +12,7 @@
           </p>
         </div>
       </div>
-      <div class="input-paragraph py-4 m-2 bg-white">
+      <div class="input-paragraph m-auto py-4 m-2 bg-white">
         <div class="m-4">
 
           <div class="py-4 paragraph">

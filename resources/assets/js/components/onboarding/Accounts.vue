@@ -1,5 +1,5 @@
 <template>
-  <div class="accounts-component">
+  <div class="accounts-component bg-white">
     <div class="page-header text-primary">
       <h1>HOW MUCH DO YOU HAVE IN YOUR ACCOUNTS?</h1>
       <br>
@@ -10,7 +10,7 @@
       <h3 v-if="blnError">{{errorText}}</h3>
     </div>
     <div class="m-auto">
-      <div class="account-categories-wrapper col-sm-8 m-auto ">
+      <div class="account-categories-wrapper p-4 m-4 col-sm-8 m-auto ">
         <div :key="accountCategory.id" class="account-category-item" v-for="(accountCategory) in accountCategories">
           <h1 class="text-primary text-left">{{accountCategory.categoryName}}</h1>
           <div class="category-accounts-wrapper">
@@ -38,7 +38,7 @@
 
         <div class="d-flex justify-content-between align-items-center">
           <div>
-            <button type="button" class="btn btn-lg btn-primary next-button" v-on:click="callAndProceed"><i class="fa fa-arrow-left text-warning"></i> Prev</button>
+<!--            <button type="button" class="btn btn-lg btn-primary next-button" v-on:click="callAndProceed"><i class="fa fa-arrow-left text-warning"></i> Prev</button>-->
 
           </div>
           <div>
@@ -46,7 +46,7 @@
 
           </div>
           <div>
-            <button type="button" class="btn btn-lg btn-primary next-button" v-on:click="callAndProceed">Next <i class="fa fa-arrow-right text-warning"></i></button>
+            <button type="button" class="btn btn-lg btn-primary next-button" v-on:click="()=>{callAndProceed();$emit('progress', 1)}">Save and Proceed <i class="fa fa-arrow-right text-warning"></i></button>
           </div>
 
         </div>

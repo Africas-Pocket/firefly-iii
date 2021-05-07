@@ -1,5 +1,5 @@
 <template>
-  <div class="money-goal-component">
+  <div class="money-goal-component bg-white">
     <div class="m-auto">
       <div class="page-header py-4">
         <h1 class="text-primary">WHAT ARE YOUR MONEY GOALS?</h1>
@@ -7,17 +7,14 @@
           <p class="text-primary">Pick all that apply</p>
         </div>
       </div>
-      <div class="money-goal-wrapper p-4">
+      <div class="money-goal-wrapper m-auto p-4">
         <div v-for="moneyGoal in moneyGoals" class="btn btn-warning money-goal-item">
           <h1 class="goal-title text-uppercase">{{ moneyGoal.title }}</h1>
           <p class="goal-subtitle" v-if="moneyGoal.subtitle">{{ moneyGoal.subtitle }}</p>
         </div>
+        <button type="button" class="btn float-right btn-lg btn-primary" v-on:click="$emit('progress', 1)">Next <i class="fa text-warning fa-arrow-right"></i></button>
       </div>
-    </div>
 
-    <div class="next-button">
-      <button type="button" class="btn float-right btn-lg btn-primary" v-on:click="$emit('progress', 1)">Next <i class="fa text-warning fa-arrow-right"></i></button>
-      <button type="button" class="btn float-left btn-lg btn-primary" v-on:click="$emit('progress', 1)">Next <i class="fa text-warning fa-arrow-right"></i></button>
     </div>
   </div>
 </template>
@@ -78,7 +75,7 @@ export default {
   padding: 15px;
   text-align: center;
   max-width: 646px;
-  margin-bottom: 48px;
+  margin: 20px auto;
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 20px;
   min-width: 105px;
