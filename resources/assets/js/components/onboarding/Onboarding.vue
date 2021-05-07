@@ -17,6 +17,7 @@
       <Accounts v-if="intCurrentStep == 3" v-on:progress="intCurrentStep += $event"></Accounts>
       <Income v-if="intCurrentStep == 4" v-on:progress="intCurrentStep += $event"></Income>
       <Expenses v-if="intCurrentStep == 5" v-on:progress="intCurrentStep += $event"></Expenses>
+      <Complete v-if="intCurrentStep == 6" v-on:progress="intCurrentStep += $event"></Complete>
       <div class="col-sm-8 m-auto">
 <!--        <div class="steps-action">
           <a-button v-if="intCurrentStep > 0" style="margin-left: 8px" @click="prev">
@@ -44,10 +45,11 @@ import MoneyGoals from './MoneyGoals.vue'
 import Accounts from './Accounts.vue'
 import Income from './Income.vue'
 import Expenses from './Expenses.vue'
+import Complete from "./Complete";
 
 export default {
   name: 'Onboarding',
-  components: {Welcome, Basics, MoneyGoals, Accounts, Income, Expenses},
+  components: {Welcome, Basics, MoneyGoals, Accounts, Income, Expenses, Complete},
   mounted() {
     // console.log('Component mounted.')
   },
@@ -75,6 +77,9 @@ export default {
         },
         {
           title: 'Expenses',
+        },
+        {
+          title: 'Complete',
         },
       ],
     }
