@@ -55,7 +55,7 @@ export default {
   data() {
     return {
       name: "Isaac",
-      intCurrentStep: 4,
+      intCurrentStep: 5,
       current: 0,
       steps: [
         {

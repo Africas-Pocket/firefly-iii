@@ -1552,7 +1552,7 @@ export default {
 </script>
 <style scoped>
 .accounts-component{
-  width: 100vw;
+  width: 100%;
   background-color: #fff;
 }
 .account-categories-wrapper{
