@@ -36,6 +36,7 @@ window.Vue = Vue;
 
 Vue.use(Antd);
 Vue.component('v-select', vSelect)
+export const csrfToken = document.querySelector('meta[name="csrf-token"]').content
 
 const app = new Vue({
     el: '#app',
