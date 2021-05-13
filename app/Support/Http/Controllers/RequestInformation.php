@@ -43,14 +43,12 @@ use Route as RouteFacade;
  */
 trait RequestInformation
 {
-
-
     /**
      * Get the domain of FF system.
      *
      * @return string
      */
-    protected function getDomain(): string // get request info
+    final protected function getDomain(): string // get request info
     {
         $url   = url()->to('/');
         $parts = parse_url($url);
@@ -67,7 +65,7 @@ trait RequestInformation
      * @return string
      *
      */
-    protected function getHelpText(string $route, string $language): string // get from internet.
+    final protected function getHelpText(string $route, string $language): string // get from internet.
     {
         $help = app(HelpInterface::class);
         // get language and default variables.
@@ -98,6 +96,7 @@ trait RequestInformation
             // also check cache first:
             if ($help->inCache($route, $language)) {
                 Log::debug(sprintf('Help text %s was in cache.', $language));
+
                 return $help->getFromCache($route, $language);
             }
             $baseHref   = route('index');
@@ -114,7 +113,25 @@ trait RequestInformation
             return $content;
         }
 
-        return '<p>' . trans('firefly.route_has_no_help') . '</p>'; // @codeCoverageIgnore
+        return '<p>' . trans('firefly.route_has_no_help') . '</p>'; 
+    }
+
+    /**
+     * @return string
+     */
+    final protected function getPageName(): string // get request info
+    {
+        return str_replace('.', '_', RouteFacade::currentRouteName());
+    }
+
+    /**
+     * Get the specific name of a page for intro.
+     *
+     * @return string
+     */
+    final protected function getSpecificPageName(): string // get request info
+    {
+        return null === RouteFacade::current()->parameter('objectType') ? '' : '_' . RouteFacade::current()->parameter('objectType');
     }
 
     /**
@@ -124,7 +141,7 @@ trait RequestInformation
      *
      * @return array
      */
-    protected function getValidTriggerList(TestRuleFormRequest $request): array // process input
+    final protected function getValidTriggerList(TestRuleFormRequest $request): array // process input
     {
         $triggers = [];
         $data     = $request->get('triggers');
@@ -146,13 +163,10 @@ trait RequestInformation
      *
      * @return bool
      */
-    protected function hasSeenDemo(): bool // get request info + get preference
+    final protected function hasSeenDemo(): bool // get request info + get preference
     {
         $page         = $this->getPageName();
         $specificPage = $this->getSpecificPageName();
-
-
-
         // indicator if user has seen the help for this page ( + special page):
         $key = sprintf('shown_demo_%s%s', $page, $specificPage);
         // is there an intro for this route?
@@ -166,28 +180,10 @@ trait RequestInformation
             $shownDemo = app('preferences')->get($key, false)->data;
         }
         if (!is_bool($shownDemo)) {
-            $shownDemo = true; // @codeCoverageIgnore
+            $shownDemo = true; 
         }
 
         return $shownDemo;
-    }
-
-    /**
-     * @return string
-     */
-    protected function getPageName(): string // get request info
-    {
-        return str_replace('.', '_', RouteFacade::currentRouteName());
-    }
-
-    /**
-     * Get the specific name of a page for intro.
-     *
-     * @return string
-     */
-    protected function getSpecificPageName(): string // get request info
-    {
-        return null === RouteFacade::current()->parameter('objectType') ? '' : '_' . RouteFacade::current()->parameter('objectType');
     }
 
     /**
@@ -198,7 +194,7 @@ trait RequestInformation
      * @return bool
      *
      */
-    protected function notInSessionRange(Carbon $date): bool // Validate a preference
+    final protected function notInSessionRange(Carbon $date): bool // Validate a preference
     {
         /** @var Carbon $start */
         $start = session('start', Carbon::now()->startOfMonth());
@@ -223,7 +219,7 @@ trait RequestInformation
      *
      * @return array
      */
-    protected function parseAttributes(array $attributes): array // parse input + return result
+    final protected function parseAttributes(array $attributes): array // parse input + return result
     {
         $attributes['location'] = $attributes['location'] ?? '';
         $attributes['accounts'] = AccountList::routeBinder($attributes['accounts'] ?? '', new Route('get', '', []));
@@ -249,7 +245,7 @@ trait RequestInformation
     /**
      * Validate users new password.
      *
-     * @param User $user
+     * @param User   $user
      * @param string $current
      * @param string $new
      *
@@ -257,7 +253,7 @@ trait RequestInformation
      *
      * @throws ValidationException
      */
-    protected function validatePassword(User $user, string $current, string $new): bool //get request info
+    final protected function validatePassword(User $user, string $current, string $new): bool //get request info
     {
         if (!Hash::check($current, $user->password)) {
             throw new ValidationException((string)trans('firefly.invalid_current_password'));
@@ -278,7 +274,7 @@ trait RequestInformation
      * @return ValidatorContract
      * @codeCoverageIgnore
      */
-    protected function validator(array $data): ValidatorContract
+    final protected function validator(array $data): ValidatorContract
     {
         return Validator::make(
             $data,

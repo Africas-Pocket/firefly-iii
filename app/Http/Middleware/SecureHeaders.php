@@ -39,8 +39,8 @@ class SecureHeaders
      * @param Request $request
      * @param Closure $next
      *
-     * @throws Exception
      * @return mixed
+     * @throws Exception
      */
     public function handle(Request $request, Closure $next)
     {
@@ -58,7 +58,7 @@ class SecureHeaders
             "base-uri 'self'",
             "font-src 'self' data:",
             "connect-src 'self'",
-            sprintf("img-src 'self' data: https://a.tile.openstreetmap.org https://b.tile.openstreetmap.org https://c.tile.openstreetmap.org https://api.tiles.mapbox.com %s", $trackingScriptSrc),
+            sprintf("img-src data: 'strict-dynamic' 'self' *.tile.openstreetmap.org %s", $trackingScriptSrc),
             "manifest-src 'self'",
         ];
 
@@ -77,7 +77,7 @@ class SecureHeaders
             "camera 'none'",
             "magnetometer 'none'",
             "gyroscope 'none'",
-            "speaker 'none'",
+            //"speaker 'none'",
             //"vibrate 'none'",
             "fullscreen 'self'",
             "payment 'none'",
@@ -94,6 +94,9 @@ class SecureHeaders
         $response->header('X-XSS-Protection', '1; mode=block');
         $response->header('X-Content-Type-Options', 'nosniff');
         $response->header('Referrer-Policy', 'no-referrer');
+        $response->header('X-Download-Options', 'noopen');
+        $response->header('X-Permitted-Cross-Domain-Policies', 'none');
+        $response->header('X-Robots-Tag', 'none');
         $response->header('Feature-Policy', implode('; ', $featurePolicies));
 
         return $response;
@@ -106,8 +109,8 @@ class SecureHeaders
      */
     private function getTrackingScriptSource(): string
     {
-        if ('' !== (string) config('firefly.tracker_site_id') && '' !== (string) config('firefly.tracker_url')) {
-            return (string) config('firefly.tracker_url');
+        if ('' !== (string)config('firefly.tracker_site_id') && '' !== (string)config('firefly.tracker_url')) {
+            return (string)config('firefly.tracker_url');
         }
 
         return '';

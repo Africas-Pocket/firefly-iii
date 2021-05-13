@@ -29,15 +29,15 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Carbon;
 
 /**
- * Class AccountMeta.
+ * Class AccountMeta
  *
- * @property string                          $data
- * @property string                          $name
- * @property int                             $account_id
- * @property int                             $id
+ * @property int $id
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- * @property-read Account                    $account
+ * @property int $account_id
+ * @property string $name
+ * @property mixed $data
+ * @property-read \FireflyIII\Models\Account $account
  * @method static Builder|AccountMeta newModelQuery()
  * @method static Builder|AccountMeta newQuery()
  * @method static Builder|AccountMeta query()
@@ -76,7 +76,7 @@ class AccountMeta extends Model
     }
 
     /**
-     * @param $value
+     * @param mixed $value
      *
      * @codeCoverageIgnore
      * @return mixed
@@ -87,7 +87,7 @@ class AccountMeta extends Model
     }
 
     /**
-     * @param $value
+     * @param mixed $value
      *
      * @codeCoverageIgnore
      */

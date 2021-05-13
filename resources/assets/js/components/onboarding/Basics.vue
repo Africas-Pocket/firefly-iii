@@ -1,4 +1,5 @@
 <template>
+<<<<<<< HEAD
   <div class="basics-component bg-white">
     <div class="elements-wrapper m-auto">
 
@@ -74,6 +75,91 @@
 
     </div>
   </div>
+=======
+  <center class="push">
+    <h1>LET'S START WITH THE BASICS</h1>
+    <br />
+    <p>
+      This will help us recommend useful investment opportunities to you based
+      on your profile.
+    </p>
+    <br />
+    <h2>
+      My preferred name is
+      <input type="text" class="" id="preferedName" placeholder="" v-model="preferredName" />. I
+      currently live in
+      <select class="" v-model="livingCountry">
+        <option selected>Name of country</option>
+        <option v-for="country, index in countries" :key="index">{{country.countryName}}</option>
+      </select>
+      and I'm originally from
+      <select class="" v-model="originCountry">
+        <option selected>Name of country</option>
+        <option v-for="country, index in countries" :key="index">{{country.countryName}}</option>
+      </select>
+    </h2>
+    <br /><br />
+    <h2>
+      I am a successful
+      <input type="number" class="" id="age" placeholder="Age" v-model="age" /> year old
+      <select class="" v-model="gender">
+        <option selected>Gender dropdown</option>
+        <option>Male</option>
+        <option>Female</option>
+        <option>Prefer not to say</option>
+      </select>
+      with a
+      <select class="" v-model="educationLevel">
+        <option selected>Education level</option>
+        <option>High school</option>
+        <option>Bachelors</option>
+        <option>Masters</option>
+        <option>Post-graduate</option>
+      </select>
+      level education.
+    </h2>
+    <br /><br />
+    <h2>
+      I am
+      <select class="" v-model="status">
+        <option selected>Status dropdown</option>
+        <option>Single</option>
+        <option>Married</option>
+        <option>Divorced</option>
+        <option>Widow/widower</option>
+      </select>
+      with
+      <input type="number" class="" id="children" placeholder="#" v-model="children" /> beautiful
+      kids. I work in a
+      <select class="" v-model="role">
+        <option selected>Roles dropdown</option>
+        <option>Entry level</option>
+        <option>Mid-management</option>
+        <option>Senior management</option>
+        <option>Self-employed</option>
+        <option>Retired</option>
+        <option>In-between jobs</option>
+      </select>
+      role.
+    </h2>
+    <br /><br />
+    <h2>
+      I earn primarily in
+      <select class="" v-model="currency">
+        <option selected>currency dropdown</option>
+        <option v-for="country, index in countries" :key="index">{{country.currencyCode}}</option>
+      </select>
+    </h2>
+    <br /><br />
+    <button
+      type="button"
+      class="btn btn-lg btn-warning"
+      v-on:click="$emit('progress', 1)"
+    >
+      LET'S GET YOUR GOALS SET UP
+    </button>
+  </center>
+>>>>>>> develop
 </template>
 <script>
 export default {
@@ -1350,8 +1436,15 @@ export default {
       levelOfEducation: "",
       status: "",
       role: "",
+<<<<<<< HEAD
       name:"",
       preferredCurrency: ""
+=======
+      currency: "",
+      children: 0,
+      roles: [],
+      // currencies: []
+>>>>>>> develop
     };
   },
 };

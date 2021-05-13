@@ -1,4 +1,5 @@
 <template>
+<<<<<<< HEAD
 <div class="income-component p-4">
   <div class="push">
     <div class="page-header">
@@ -81,6 +82,18 @@
 
     </a-modal>
 <!--
+=======
+<div>
+  <center class="push">
+    <h1>WHAT'S YOUR INCOME?</h1>
+    <br>
+    <p>This gives us somewhere to start</p>
+    <br>
+    <h2 v-if="!blnAddIncome">LET US KNOW HOW MUCH YOU EARN</h2>
+    <h2 v-if="blnAddIncome">CREATE A NEW INCOME</h2>
+    <h3 v-if="blnError" style="color:red;">{{ errorText }}</h3>
+  
+>>>>>>> develop
     <br><br>
     <div v-if="!blnAddIncome">
       <form v-for="(income, index) in incomes" :key="index" class="form-inline">
@@ -1477,6 +1490,14 @@ export default {
           currencyCode: "ZWL",
         },
       ],
+<<<<<<< HEAD
+=======
+      newIncome: {name:'', title:'Type of account', selected: true, amount: '', frequency: 'Frequency', currency: 'Currency'},
+      blnAddIncome: false,
+      blnError: false,
+      errorText: "",
+      
+>>>>>>> develop
     };
   },
   methods: {
@@ -1500,12 +1521,15 @@ export default {
       this.newIncomeModalIsVisible=true
     },
     async callAndProceed() {
+      this.blnError = false;
+      this.errorText = ""
+      let success = true
       let csrfToken = document.querySelector('meta[name="csrf-token"]').content
       let tomorrow = new Date();
       tomorrow.setDate(new Date().getDate()+1);
       for(const income of this.incomes) {
         if (!income.selected) {
-          return
+          continue
         }
         const data = {
           "type": "deposit",
@@ -1535,8 +1559,8 @@ export default {
           ]
         }
 
-        fetch('/api/v1/recurrences', {
-          method: 'POST', // or 'PUT'
+        let resp = await fetch('/api/v1/recurrences', {
+          method: 'POST',
           headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
@@ -1544,15 +1568,25 @@ export default {
           },
           body: JSON.stringify(data),
         })
-        .then(response => response.json())
-        .then(data => {
-          console.log('Success:', data);
-        })
-        .catch((error) => {
-          console.error('Error:', error);
-        })
+        if (resp.status !== 200) {
+          success = false;
+        }
+        resp = await resp.json();
+        console.log(resp);
+        if (!success) {
+          // console.log("no bueno");
+          this.blnError = true;
+          for (const errorsKey in resp.errors) {
+            resp.errors[errorsKey].map((message) => {
+              this.errorText = income.name + ": " + message;
+            });
+          }
+          // TODO: Handle partial success case, array to hold succeeded, check before run
+        }
       }
-      this.$emit('progress', 1);
+      if (success) {
+        this.$emit('progress', 1);
+      }
     }
   }
 };

@@ -29,20 +29,18 @@ use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Carbon;
 
 /**
- * Class Configuration.
+ * FireflyIII\Models\Configuration
  *
- * @property string                          $data
- * @property string                          $name
- * @property int                             $id
+ * @property int $id
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property Carbon|null $deleted_at
- * @method static bool|null forceDelete()
+ * @property string $name
+ * @property mixed $data
  * @method static \Illuminate\Database\Eloquent\Builder|Configuration newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Configuration newQuery()
  * @method static Builder|Configuration onlyTrashed()
  * @method static \Illuminate\Database\Eloquent\Builder|Configuration query()
- * @method static bool|null restore()
  * @method static \Illuminate\Database\Eloquent\Builder|Configuration whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Configuration whereData($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Configuration whereDeletedAt($value)
@@ -72,9 +70,10 @@ class Configuration extends Model
     protected $table = 'configuration';
 
     /**
+     * TODO can be replaced by native laravel code
      * @codeCoverageIgnore
      *
-     * @param $value
+     * @param mixed $value
      *
      * @return mixed
      */
@@ -86,7 +85,7 @@ class Configuration extends Model
     /**
      * @codeCoverageIgnore
      *
-     * @param $value
+     * @param mixed $value
      */
     public function setDataAttribute($value): void
     {

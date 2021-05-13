@@ -22,7 +22,6 @@ declare(strict_types=1);
 
 namespace FireflyIII\Models;
 
-use Carbon\Carbon;
 use Eloquent;
 use FireflyIII\User;
 use Illuminate\Database\Eloquent\Builder;
@@ -31,15 +30,15 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
- * Class Preference.
+ * FireflyIII\Models\Preference
  *
- * @property mixed  $data
- * @property string $name
- * @property Carbon $updated_at
- * @property Carbon $created_at
- * @property int    $id
- * @property User   user
- * @property int    $user_id
+ * @property int                             $id
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property int                             $user_id
+ * @property string                          $name
+ * @property int|string|array|null           $data
+ * @property-read User                       $user
  * @method static Builder|Preference newModelQuery()
  * @method static Builder|Preference newQuery()
  * @method static Builder|Preference query()
@@ -50,7 +49,6 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  * @method static Builder|Preference whereUpdatedAt($value)
  * @method static Builder|Preference whereUserId($value)
  * @mixin Eloquent
- * @property-read \FireflyIII\User $user
  */
 class Preference extends Model
 {
@@ -74,17 +72,27 @@ class Preference extends Model
      *
      * @param string $value
      *
-     * @throws NotFoundHttpException
      * @return Preference
+     * @throws NotFoundHttpException
      */
     public static function routeBinder(string $value): Preference
     {
         if (auth()->check()) {
             /** @var User $user */
             $user = auth()->user();
-            /** @var Preference $preference */
+            /** @var Preference|null $preference */
             $preference = $user->preferences()->where('name', $value)->first();
             if (null !== $preference) {
+                return $preference;
+            }
+            $default = config('firefly.default_preferences');
+            if (array_key_exists($value, $default)) {
+                $preference          = new Preference;
+                $preference->name    = $value;
+                $preference->data    = $default[$value];
+                $preference->user_id = $user->id;
+                $preference->save();
+
                 return $preference;
             }
         }

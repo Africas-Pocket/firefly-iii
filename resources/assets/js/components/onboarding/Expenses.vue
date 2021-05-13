@@ -6,6 +6,7 @@
     <p>We'll help create a budget for you</p>
     <br>
     <h2>CREATE YOUR BILLS/EXPENSES</h2>
+    <h3 v-if="blnError" style="color:red;">{{ errorText }}</h3>
   
     <br><br>
     <div v-if="!blnAddExpense">
@@ -202,6 +203,7 @@ export default {
         }
       ],
       newExpense: {name: '', selected: true, amount: '', frequency: 'Frequency', due: ''},
+<<<<<<< HEAD
       countries: [
         {
           countryCode: "AD",
@@ -1455,6 +1457,11 @@ export default {
         },
       ],
       blnAddExpense: false
+=======
+      blnAddExpense: false,
+      blnError: false,
+      errorText: ""
+>>>>>>> develop
     };
   },
   methods: {
@@ -1484,10 +1491,13 @@ export default {
     },
 
     async callAndProceed() {
+      this.blnError = false;
+      this.errorText = ""
+      let success = true
       let csrfToken = document.querySelector('meta[name="csrf-token"]').content
       for(const expense of this.expenses) {
         if (!expense.selected) {
-          return
+          continue
         }
         const data = {
           "type": "withdrawal",
@@ -1512,13 +1522,13 @@ export default {
               "amount": expense.amount,
               "currency_code": expense.currency,
               "source_id": "24",
-              // "destination_id": "1",
+              "destination_id": "1",
             }
           ]
         }
 
-        fetch('/api/v1/recurrences', {
-          method: 'POST', // or 'PUT'
+        let resp = await fetch('/api/v1/recurrences', {
+          method: 'POST',
           headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
@@ -1526,15 +1536,27 @@ export default {
           },
           body: JSON.stringify(data),
         })
-        .then(response => response.json())
-        .then(data => {
-          console.log('Success:', data);
-        })
-        .catch((error) => {
-          console.error('Error:', error);
-        })
+        if (resp.status !== 200) {
+          this.success = false;
+        }
+        resp = await resp.json();
+        console.log(resp);
+        if (!this.success) {
+          // console.log("no bueno");
+          success = false;
+          this.blnError = true;
+          for (const errorsKey in resp.errors) {
+            resp.errors[errorsKey].map((message) => {
+              this.errorText = expense.name + ": " + message;
+            });
+          }
+          // TODO: Handle partial success case, array to hold succeeded, check before run
+        }
       }
-      // this.goHome()
+      
+      if (success) {
+        this.goHome()
+      }
     },
 
     goHome() {

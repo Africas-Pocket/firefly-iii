@@ -1,6 +1,6 @@
 /*
  * bootstrap.js
- * Copyright (c) 2020 james@firefly-iii.org
+ * Copyright (c) 2021 james@firefly-iii.org
  *
  * This file is part of Firefly III (https://github.com/firefly-iii).
  *
@@ -18,7 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-// imports
+// // imports
 import Vue from 'vue';
 import VueI18n from 'vue-i18n'
 import * as uiv from 'uiv';
@@ -52,12 +52,13 @@ if (localeToken) {
 require('jquery-ui');
 require('bootstrap'); // bootstrap CSS?
 
-require('./dist/js/adminlte');
+require('admin-lte/dist/js/adminlte');
 require('overlayscrollbars');
+
 
 // vue
 window.vuei18n = VueI18n;
-window.uiv =uiv;
+window.uiv = uiv;
 Vue.use(vuei18n);
 Vue.use(uiv);
 window.Vue = Vue;

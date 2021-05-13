@@ -8,7 +8,7 @@ class OnboardingController extends Controller
 {
     public function index()
     {
-        return view('onboarding.index');
+        return view('v1.onboarding.index');
     }
 
 }

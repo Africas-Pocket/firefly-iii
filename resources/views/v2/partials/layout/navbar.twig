@@ -38,6 +38,14 @@
                 <a href="{{ route('admin.index') }}" class="dropdown-item">
                     <i class="fas fa-fw fa-envelope mr-2"></i> {{ 'administration'|_ }}
                 </a>
+                <div class="dropdown-divider"></div>
+                <a href="#" class="dropdown-item">
+                    <i class="fas fa-fw fa-globe mr-2"></i> {{ 'webhooks'|_ }}
+                </a>
+                <div class="dropdown-divider"></div>
+                <a href="{{ route('export.index') }}" class="dropdown-item">
+                    <i class="fas fa-fw fa-upload mr-2"></i> {{ 'export_data_menu'|_ }}
+                </a>
             </div>
         </li>
         <!-- Notifications Dropdown Menu -->
@@ -104,7 +112,7 @@
         </li>
         <!-- here be dragons -->
         <li class="nav-item">
-            <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
+            <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button" title="{{ 'here_be_dragons'|_ }}">
                 <i class="fas fa-dragon"></i>
             </a>
         </li>

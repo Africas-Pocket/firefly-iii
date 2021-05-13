@@ -18,8 +18,8 @@
     <link href="v1/css/daterangepicker.css?v={{ FF_VERSION }}" rel="stylesheet" type="text/css"/>
 
     {# the theme #}
-    <link href="v1/lib/adminlte/css/AdminLTE.min.css?v={{ FF_VERSION }}" rel="stylesheet" type="text/css"/>
-    <link href="v1/lib/adminlte/css/skins/skin-blue-light.min.css?v={{ FF_VERSION }}" rel="stylesheet" type="text/css"/>
+    <link href="v1/lib/adminlte/css/AdminLTE.min.css?v={{ FF_VERSION }}" rel="stylesheet" type="text/css" nonce="{{ JS_NONCE }}">
+    <link href="v1/lib/adminlte/css/skins/skin-blue-light.min.css?v={{ FF_VERSION }}" rel="stylesheet" type="text/css" nonce="{{ JS_NONCE }}">
 
     {# Firefly III customisations #}
     <link href="v1/css/firefly.css?v={{ FF_VERSION }}" rel="stylesheet" type="text/css"/>
@@ -33,7 +33,7 @@
     <![endif]-->
 
     {# favicons #}
-    {% include('partials.favicons') %}
+    {% include('v1.partials.favicons') %}
 
 </head>
 <body>

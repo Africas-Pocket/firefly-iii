@@ -1452,14 +1452,21 @@ export default {
       newAccount: {name:'Name', title:'Type of account', selected: true, balance: '', currency: 'Currency'},
       blnAddAccount: false,
       blnError: false,
-      errorText: ""
+      errorText: "",
+      errorCount: 0
     };
   },
   methods: {
     addNewAccount() {
-      this.accounts.push(this.newAccount)
-      this.newAccount = {name:'', title:'Type of account', selected: true, balance: '', currency: 'Currency'}
-      this.blnAddAccount = !this.blnAddAccount
+      this.accounts.push(this.newAccount);
+      this.newAccount = {
+        name: "",
+        title: "Type of account",
+        selected: true,
+        balance: "",
+        currency: "Currency",
+      };
+      this.blnAddAccount = !this.blnAddAccount;
     },
     showModal(){
       this.modalVisible = true
@@ -1499,12 +1506,14 @@ export default {
 
     },
     async callAndProceed() {
-      let csrfToken = document.querySelector('meta[name="csrf-token"]').content
-      let success = true
+      this.blnError = false;
       this.errorText = ""
-      for(const account of this.accounts) {
+      let success = true
+      let csrfToken = document.querySelector('meta[name="csrf-token"]').content;
+      this.errorText = "";
+      for (const account of this.accounts) {
         if (!account.selected) {
-          return
+          continue
         }
         const data = {
           "name": account.name,
@@ -1515,39 +1524,47 @@ export default {
           "account_role": "defaultAsset"
         }
 
-        await fetch('/api/v1/accounts', {
-          method: 'POST',
+        let resp = await fetch("/api/v1/accounts", {
+          method: "POST",
           headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-            'X-CSRF-TOKEN': csrfToken
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            "X-CSRF-TOKEN": csrfToken,
           },
           body: JSON.stringify(data),
-        })
-            .then(response => {
-              let resp = response.json()
-              console.log(resp)
-              if (response.status !== 200) {
-                console.log("no bueno")
-                success = false
-                this.errorText = resp.errors
-              }
-              // response.json()
-            })
-            // .then(data => {
-            //   console.log('Success:', data);
-            // })
-            .catch((error) => {
-              // TODO error display
-              console.error('Error:', error);
-            })
+        });
+        // .then(response => {
+        if (resp.status !== 200) {
+          success = false;
+        }
+        resp = await resp.json();
+        console.log(resp);
+        if (!success) {
+          // console.log("no bueno");
+          this.blnError = true;
+          for (const errorsKey in resp.errors) {
+            resp.errors[errorsKey].map((message) => {
+              this.errorText = account.name + ": " + message;
+            });
+          }
+          // TODO: Handle partial success case, array to hold succeeded, check before run
+        }
+        if (success) {
+          this.$emit('progress', 1);
+        }
       }
-      console.log("success", success)
-      if (success) {
-        this.$emit('progress', 1);
-      }
-    }
-  }
+      // .then(data => {
+      //   console.log('Success:', data);
+      // })
+      // .catch((error) => {
+      //   // TODO error display
+      //   console.error('Error:', error);
+      // })
+
+      //   console.log("success", success)
+        
+    },
+  },
 };
 </script>
 <style scoped>
