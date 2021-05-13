@@ -88,11 +88,11 @@
         <p class="text-primary">We'll help create a budget for you</p>
         <h2>CREATE YOUR BILLS/EXPENSES</h2>
       </div>
-      <div class="row justify-content-center align-items-center">
-        <div :key="expense.id" class="col-sm-4 m-4"  v-for="expense in expenses">
-          <div class="card p-4 d-flex flex-column justify-content-center align-items-center">
+      <div class="d-flex w-100 flex-column justify-content-center align-items-center">
+        <div :key="expense.id" class=" w-100  m-4"  v-for="expense in expenses">
+          <div class="card p-4 d-flex flex-row justify-content-center align-items-center">
 
-            <div class="m-auto p-2 text-center " >
+            <div class="m-auto col-sm-2 p-2 text-center " >
               <div :class="expense.selected?'expense-type-item-selected':''" class="expense-type-item d-flex flex-column justify-content-center align-items-center">
                 <a-icon :style="{ fontSize: '22px', color: '#7C0225' }"  :type="expense.icon"/>
                 <p class="text-warning pt-1">{{ expense.name }}</p>
@@ -100,16 +100,16 @@
             </div>
 
             <div class="d-flex text-left flex-row flex-wrap justify-content-between align-items-center">
-              <div class="w-100 p-2">
-                <v-select  placeholder="Preferred currency"   v-model="expense.currency" label="countryName" :options="countries"></v-select>
+              <div class="col-sm-3 p-2">
+                <v-select  placeholder="Preferred currency" :reduce="currency=>currency.namePlural"  v-model="expense.currency" label="namePlural" :options="currencies"></v-select>
               </div>
-              <div class="w-100 p-2">
+              <div class="col-sm-3 p-2">
                 <a-input v-model="expense.amount" type="number" placeholder="Amount" />
               </div>
-              <div class="w-100 p-2">
+              <div class="col-sm-3  p-2">
                 <a-input v-model="expense.due" type="number" placeholder="Amount Due" />
               </div>
-              <div class="w-100 p-2">
+              <div class="col-sm-3  p-2">
                 <v-select  placeholder="Frequency"   v-model="expense.frequency"  :options="frequencies"></v-select>
               </div>
 
@@ -145,6 +145,10 @@
   </div>
 </template>
 <script>
+import {csrfToken} from "../../app_vue";
+import {storeRecurrences} from "../API";
+import {CURRENCIES} from "../helpers";
+
 export default {
   mounted() {
     // console.log('Component mounted.')
@@ -161,7 +165,7 @@ export default {
           icon:"home",
           selected: false,
           amount: '',
-          frequency: 'Frequency',
+          frequency: '',
           due: '',
           id:1
         },
@@ -169,7 +173,7 @@ export default {
           name: 'Transport', 
           selected: false, 
           amount: '', 
-          frequency: 'Frequency', 
+          frequency: '',
           due: '',
           icon:"home",
           id:2
@@ -178,7 +182,7 @@ export default {
           name: 'Food', 
           selected: false, 
           amount: '', 
-          frequency: 'Frequency', 
+          frequency: '',
           due: '',
           icon:"home",
           id:3
@@ -187,7 +191,7 @@ export default {
           name: 'Utilities', 
           selected: false, 
           amount: '', 
-          frequency: 'Frequency', 
+          frequency: '',
           due: '',
           icon:"home",
           id:4
@@ -196,13 +200,14 @@ export default {
           name: 'Entertainment', 
           selected: false, 
           amount: '', 
-          frequency: 'Frequency', 
+          frequency: '',
           due: '',
           icon:"home",
           id:5
         }
       ],
       newExpense: {name: '', selected: true, amount: '', frequency: 'Frequency', due: ''},
+<<<<<<< HEAD
 <<<<<<< HEAD
       countries: [
         {
@@ -1456,6 +1461,9 @@ export default {
           currencyCode: "ZWL",
         },
       ],
+=======
+      currencies:CURRENCIES,
+>>>>>>> ft-onboarding-form
       blnAddExpense: false
 =======
       blnAddExpense: false,
@@ -1491,10 +1499,13 @@ export default {
     },
 
     async callAndProceed() {
+<<<<<<< HEAD
       this.blnError = false;
       this.errorText = ""
       let success = true
       let csrfToken = document.querySelector('meta[name="csrf-token"]').content
+=======
+>>>>>>> ft-onboarding-form
       for(const expense of this.expenses) {
         if (!expense.selected) {
           continue
@@ -1527,6 +1538,7 @@ export default {
           ]
         }
 
+<<<<<<< HEAD
         let resp = await fetch('/api/v1/recurrences', {
           method: 'POST',
           headers: {
@@ -1556,6 +1568,24 @@ export default {
       
       if (success) {
         this.goHome()
+=======
+        // fetch('/api/v1/recurrences', {
+        //   method: 'POST', // or 'PUT'
+        //   headers: {
+        //     'Content-Type': 'application/json',
+        //     'Accept': 'application/json',
+        //     'X-CSRF-TOKEN': csrfToken
+        //   },
+        //   body: JSON.stringify(data),
+        // })
+        storeRecurrences(data)
+        .then(res => {
+          console.log('Success:', res);
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+        })
+>>>>>>> ft-onboarding-form
       }
     },
 
@@ -1565,12 +1595,11 @@ export default {
   }
 };
 </script>
-<style scoped>
-.push{
-  padding-top: 100px;
-}
-
-body {
-  background-image: none;
+<style >
+.vs__search::placeholder, input::placeholder{
+  text-align: center;
+  /*font-style: italic;*/
+  font-size: 14px;
+  /*color: #083E5B;*/
 }
 </style>

@@ -21,7 +21,7 @@
 
             <div class="d-flex text-left flex-row flex-wrap justify-content-between align-items-center">
               <div class="w-100 p-2">
-                <v-select  placeholder="Preferred currency"   v-model="income.currency" label="countryName" :options="countries"></v-select>
+                <v-select  placeholder="Preferred currency" :reduce="currency=>currency.namePlural"   v-model="income.currency" label="namePlural" :options="currencies"></v-select>
               </div>
               <div class="w-100 p-2">
                 <a-input v-model="income.amount" type="number" placeholder="Amount" />
@@ -172,6 +172,8 @@
 </div>
 </template>
 <script>
+import {CURRENCIES} from "../helpers";
+
 export default {
   mounted() {
     // console.log('Component mounted.')
@@ -238,6 +240,7 @@ export default {
         currency: 'Currency'
       },
       blnAddIncome: false,
+<<<<<<< HEAD
       countries: [
         {
           countryCode: "AD",
@@ -1498,6 +1501,9 @@ export default {
       errorText: "",
       
 >>>>>>> develop
+=======
+      currencies: CURRENCIES
+>>>>>>> ft-onboarding-form
     };
   },
   methods: {
