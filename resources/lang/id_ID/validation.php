@@ -25,7 +25,7 @@ declare(strict_types=1);
 return [
     'iban'                           => 'Ini bukan IBAN yang valid.',
     'zero_or_more'                   => 'Nilai tidak bisa negatif.',
-    'date_or_time'                   => 'The value must be a valid date or time value (ISO 8601).',
+    'date_or_time'                   => 'Nilainya harus berupa nilai tanggal atau waktu yang valid (ISO 8601).',
     'source_equals_destination'      => 'Akun sumber sama dengan akun tujuan.',
     'unique_account_number_for_user' => 'Sepertinya nomor rekening ini sudah digunakan.',
     'unique_iban_for_user'           => 'Sepertinya nomor rekening ini sudah digunakan.',
@@ -33,7 +33,7 @@ return [
     'rule_trigger_value'             => 'Nilai ini tidak validi untuk trigger yang dipilih.',
     'rule_action_value'              => 'Nilai ini tidak valid untuk tindakan yang dipilih.',
     'file_already_attached'          => 'Upload file ";name" sudah terpasang pada objek ini.',
-    'file_attached'                  => 'Successfully uploaded file ":name".',
+    'file_attached'                  => 'Berhasil mengunggah file ": name".',
     'must_exist'                     => 'ID di bidang :attribute tidak ada di database.',
     'all_accounts_equal'             => 'Semua akun di bidang ini harus sama.',
     'group_title_mandatory'          => 'A group title is mandatory when there is more than one transaction.',
@@ -60,6 +60,7 @@ return [
     'less'                           => ':attribute harus kurang dari 10,000,000',
     'active_url'                     => ':attribute bukan URL yang valid.',
     'after'                          => ':attribute harus tanggal setelah :date.',
+    'date_after'                     => 'The start date must be before the end date.',
     'alpha'                          => ':attribute hanya boleh berisi huruf.',
     'alpha_dash'                     => ':attribute hanya boleh berisi huruf, angka dan tanda hubung.',
     'alpha_num'                      => ':attribute hanya boleh berisi huruf dan angka.',
@@ -130,15 +131,21 @@ return [
     'current_target_amount'          => 'The current amount must be less than the target amount.',
     'unique_piggy_bank_for_user'     => 'Nama celengan harus unik.',
     'unique_object_group'            => 'The group name must be unique',
+    'starts_with'                    => 'The value must start with :values.',
+    'unique_webhook'                 => 'You already have a webhook with these values.',
+    'unique_existing_webhook'        => 'You already have another webhook with these values.',
+    'same_account_type'              => 'Both accounts must be of the same account type',
+    'same_account_currency'          => 'Both accounts must have the same currency setting',
 
-    'secure_password'                => 'This is not a secure password. Please try again. For more information, visit https://bit.ly/FF3-password-security',
-    'valid_recurrence_rep_type'      => 'Tipe pengulangan yang tidak valid untuk transaksi berkala.',
-    'valid_recurrence_rep_moment'    => 'Waktu pengulangan tidaklah valid untuk tipe pengulangan ini.',
-    'invalid_account_info'           => 'Informasi akun tidak valid.',
-    'attributes'                     => [
+    'secure_password'             => 'This is not a secure password. Please try again. For more information, visit https://bit.ly/FF3-password-security',
+    'valid_recurrence_rep_type'   => 'Tipe pengulangan yang tidak valid untuk transaksi berkala.',
+    'valid_recurrence_rep_moment' => 'Waktu pengulangan tidaklah valid untuk tipe pengulangan ini.',
+    'invalid_account_info'        => 'Informasi akun tidak valid.',
+    'attributes'                  => [
         'email'                   => 'alamat email',
         'description'             => 'keterangan',
         'amount'                  => 'jumlah',
+        'transactions.*.amount'   => 'transaction amount',
         'name'                    => 'nama',
         'piggy_bank_id'           => 'celengan ID',
         'targetamount'            => 'target dana',
@@ -173,10 +180,12 @@ return [
     ],
 
     // validation of accounts:
-    'withdrawal_source_need_data'    => 'Need to get a valid source account ID and/or valid source account name to continue.',
-    'withdrawal_source_bad_data'     => 'Could not find a valid source account when searching for ID ":id" or name ":name".',
-    'withdrawal_dest_need_data'      => 'Need to get a valid destination account ID and/or valid destination account name to continue.',
-    'withdrawal_dest_bad_data'       => 'Could not find a valid destination account when searching for ID ":id" or name ":name".',
+    'withdrawal_source_need_data' => 'Need to get a valid source account ID and/or valid source account name to continue.',
+    'withdrawal_source_bad_data'  => 'Could not find a valid source account when searching for ID ":id" or name ":name".',
+    'withdrawal_dest_need_data'   => 'Need to get a valid destination account ID and/or valid destination account name to continue.',
+    'withdrawal_dest_bad_data'    => 'Could not find a valid destination account when searching for ID ":id" or name ":name".',
+
+    'generic_source_bad_data'  => 'Could not find a valid source account when searching for ID ":id" or name ":name".',
 
     'deposit_source_need_data' => 'Need to get a valid source account ID and/or valid source account name to continue.',
     'deposit_source_bad_data'  => 'Could not find a valid source account when searching for ID ":id" or name ":name".',
@@ -205,5 +214,5 @@ return [
 
     'amount_required_for_auto_budget' => 'The amount is required.',
     'auto_budget_amount_positive'     => 'The amount must be more than zero.',
-    'auto_budget_period_mandatory' => 'The auto budget period is a mandatory field.',
+    'auto_budget_period_mandatory'    => 'The auto budget period is a mandatory field.',
 ];

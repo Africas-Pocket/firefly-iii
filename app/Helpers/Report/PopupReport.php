@@ -27,10 +27,10 @@ use FireflyIII\Models\Account;
 use FireflyIII\Models\Budget;
 use FireflyIII\Models\Category;
 use FireflyIII\Models\TransactionType;
+use FireflyIII\Repositories\Account\AccountRepositoryInterface;
 use FireflyIII\Repositories\Currency\CurrencyRepositoryInterface;
 use FireflyIII\Repositories\Journal\JournalRepositoryInterface;
 use Illuminate\Support\Collection;
-use Log;
 
 /**
  * Class PopupReport.
@@ -77,10 +77,8 @@ class PopupReport implements PopupReportInterface
         if (null !== $currencyId) {
             /** @var CurrencyRepositoryInterface $repos */
             $repos    = app(CurrencyRepositoryInterface::class);
-            $currency = $repos->find((int) $currencyId);
+            $currency = $repos->find((int)$currencyId);
         }
-
-
         /** @var GroupCollectorInterface $collector */
         $collector = app(GroupCollectorInterface::class);
         $collector
@@ -114,10 +112,8 @@ class PopupReport implements PopupReportInterface
         if (null !== $currencyId) {
             /** @var CurrencyRepositoryInterface $repos */
             $repos    = app(CurrencyRepositoryInterface::class);
-            $currency = $repos->find((int) $currencyId);
+            $currency = $repos->find((int)$currencyId);
         }
-
-
         /** @var GroupCollectorInterface $collector */
         $collector = app(GroupCollectorInterface::class);
         $collector->setAccounts($attributes['accounts'])
@@ -156,7 +152,7 @@ class PopupReport implements PopupReportInterface
         if (null !== $currencyId) {
             /** @var CurrencyRepositoryInterface $repos */
             $repos    = app(CurrencyRepositoryInterface::class);
-            $currency = $repos->find((int) $currencyId);
+            $currency = $repos->find((int)$currencyId);
         }
 
         /** @var GroupCollectorInterface $collector */
@@ -199,17 +195,24 @@ class PopupReport implements PopupReportInterface
         if (null !== $currencyId) {
             /** @var CurrencyRepositoryInterface $repos */
             $repos    = app(CurrencyRepositoryInterface::class);
-            $currency = $repos->find((int) $currencyId);
+            $currency = $repos->find((int)$currencyId);
         }
 
         /** @var JournalRepositoryInterface $repository */
         $repository = app(JournalRepositoryInterface::class);
         $repository->setUser($account->user);
 
+        $accountRepository = app(AccountRepositoryInterface::class);
+        $accountRepository->setUser($account->user);
+
         /** @var GroupCollectorInterface $collector */
         $collector = app(GroupCollectorInterface::class);
 
-        $collector->setAccounts(new Collection([$account]))
+        // set report accounts + the request accounts:
+        $set = $attributes['accounts'] ?? new Collection;
+        $set->push($account);
+
+        $collector->setBothAccounts($set)
                   ->setRange($attributes['startDate'], $attributes['endDate'])
                   ->withAccountInformation()
                   ->withBudgetInformation()
