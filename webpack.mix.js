@@ -41,7 +41,8 @@ mix.webpackConfig({
                   });
 
 mix.js('resources/assets/js/app.js', 'public/v1/js');
-mix.js('resources/assets/js/app_vue.js', 'public/v1/js').vue({version: 2});
-mix.js('resources/assets/js/create_transaction.js', 'public/v1/js').vue({version: 2});
-mix.js('resources/assets/js/edit_transaction.js', 'public/v1/js').vue({version: 2});
-mix.js('resources/assets/js/profile.js', 'public/v1/js').vue({version: 2});
+mix.js('resources/assets/js/app_vue.js', 'public/v1/js');
+mix.js('resources/assets/js/create_transaction.js', 'public/v1/js');
+mix.js('resources/assets/js/edit_transaction.js', 'public/v1/js');
+mix.js('resources/assets/js/profile.js', 'public/v1/js');
+mix.sass('resources/assets/sass/app.scss','public/v1/css')

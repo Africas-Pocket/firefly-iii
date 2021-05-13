@@ -13547,5 +13547,30 @@ try {
 } catch (e) {}
 })();
 
-/******/ })()
-;
+/***/ }),
+
+/***/ "./resources/assets/sass/app.scss":
+/*!****************************************!*\
+  !*** ./resources/assets/sass/app.scss ***!
+  \****************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
+/***/ 0:
+/*!***************************************************************************!*\
+  !*** multi ./resources/assets/js/app.js ./resources/assets/sass/app.scss ***!
+  \***************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(/*! /home/lennox/Desktop/work/ap/firefly-iii/resources/assets/js/app.js */"./resources/assets/js/app.js");
+module.exports = __webpack_require__(/*! /home/lennox/Desktop/work/ap/firefly-iii/resources/assets/sass/app.scss */"./resources/assets/sass/app.scss");
+
+
+/***/ })
+
+/******/ });

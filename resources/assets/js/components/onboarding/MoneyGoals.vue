@@ -1,48 +1,22 @@
 <template>
-  <center class="push">
-    <h1>WHAT ARE YOUR MONEY GOALS?</h1>
-    <br>
-    <p>Pick all that apply</p>
-    <br>
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-      <label class="form-check-label" for="defaultCheck1">
-        TRACK YOUR SPENDING
-      </label>
+  <div class="money-goal-component bg-white">
+    <div class="m-auto">
+      <div class="page-header py-4">
+        <h1 class="text-primary">WHAT ARE YOUR MONEY GOALS?</h1>
+        <div>
+          <p class="text-primary">Pick all that apply</p>
+        </div>
+      </div>
+      <div class="money-goal-wrapper m-auto p-4">
+        <div v-for="moneyGoal in moneyGoals" class="btn btn-warning money-goal-item">
+          <h1 class="goal-title text-uppercase">{{ moneyGoal.title }}</h1>
+          <p class="goal-subtitle" v-if="moneyGoal.subtitle">{{ moneyGoal.subtitle }}</p>
+        </div>
+        <button type="button" class="btn float-right btn-lg btn-primary" v-on:click="$emit('progress', 1)">Next <i class="fa text-warning fa-arrow-right"></i></button>
+      </div>
+
     </div>
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-      <label class="form-check-label" for="defaultCheck1">
-        SAVE AN EMERGENCY FUND
-      </label>
-    </div>
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-      <label class="form-check-label" for="defaultCheck1">
-        INVEST FOR A FUTURE GOAL
-      </label>
-    </div>
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-      <label class="form-check-label" for="defaultCheck1">
-        PLAN FOR RETIREMENT
-      </label>
-    </div>
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-      <label class="form-check-label" for="defaultCheck1">
-        BUILD WEALTH
-      </label>
-    </div>
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-      <label class="form-check-label" for="defaultCheck1">
-        PAY OFF DEBT
-      </label>
-    </div>
-    <br><br>
-    <button type="button" class="btn btn-lg btn-warning" v-on:click="$emit('progress', 1)">-></button>
-  </center>
+  </div>
 </template>
 <script>
 export default {
@@ -52,13 +26,67 @@ export default {
   computed: {},
   data() {
     return {
-      
+      moneyGoals:[
+        {
+          id:0,
+          title:"track your spending",
+        },
+        {
+          id:1,
+          title:"save an emergency fund",
+          subtitle:"3-6 months of your living expenses"
+        },
+        {
+          id:1,
+          title:"save an emergency fund",
+          subtitle:"3-6 months of your living expenses"
+        },
+        {
+          id:1,
+          title:"save an emergency fund",
+          subtitle:"3-6 months of your living expenses"
+        },
+        {
+          id:1,
+          title:"save an emergency fund",
+          subtitle:"3-6 months of your living expenses"
+        },
+      ]
     };
   },
 };
 </script>
 <style scoped>
-.push{
-  padding-top: 100px;
+.money-goal-component{
+  width: 100%;
+  text-align: center;
+  margin: 24px;
 }
+.money-goal-wrapper{
+
+  max-width: 1029px;
+  width: 100%;
+  background: #FFFFFF;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+}
+.money-goal-item{
+  display: block;
+  padding: 15px;
+  text-align: center;
+  max-width: 646px;
+  margin: 20px auto;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 20px;
+  min-width: 105px;
+}
+.money-goal-item .goal-title{
+  color: #7C0225;
+  text-transform: uppercase;
+}
+.money-goal-item .goal-subtitle{
+  color: #083E5B;
+  font-style: italic;
+}
+
 </style>

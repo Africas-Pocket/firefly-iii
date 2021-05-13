@@ -1,6 +1,68 @@
-body {
-    background-image: url("../../Btoolbg.png");
-    background-position: center; /* Center the image */
-    background-repeat: no-repeat; /* Do not repeat the image */
-    background-size: cover;
+.onboarding-next-button{
+    font-style: normal;
+    font-weight: normal;
+    font-size: 22px;
+    align-items: center;
+    text-align: center;
+    letter-spacing: -0.3px;
+    text-transform: uppercase;
+    background: #FCC455;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    color: #7C0225;
+}
+.text-primary{
+    color: #083E5B !important;
+}
+
+.btn-primary{
+    border-color: #083E5B !important;
+    background-color: #083E5B !important;
+}
+.btn-warning{
+    border-color: #FCC455 !important;
+    background-color: #FCC455 !important;
+}
+.text-warning{
+    color: #FCC455 !important;
+}
+footer{
+    position: absolute;
+    color: white;
+    background-color: #083E5B;
+    width: 100%;
+
+}
+footer .scroll-to-top-btn{
+    /*width: 100%;*/
+    display: inline;
+    position: relative;
+    top: -10px;
+    /*left: 0;*/
+    right: 10px;
+    /*right: 2px;*/
+    z-index: 100;
+    float: right;
+}
+footer .social-links{
+    /*padding: 35px 0;*/
+
+}
+footer .footer-link-wrapper{
+    padding: 35px 3px;
+}
+footer .footer-link{
+    font-size: 18px;
+}
+.horizontal-divider{
+    border: 1px solid #FCC455;
+}
+
+.next-button{
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 40px;
+}
+.page-header{
+    text-align: center;
+    padding: 27px;
 }
