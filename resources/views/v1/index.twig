@@ -8,7 +8,7 @@
     <div class="row">
         <div class="col-lg-8 col-md-12 col-sm-12">
             {# ACCOUNTS #}
-            <div class="box box-primary">
+            <div class="db-your-accounts box">
                 <div class="box-header with-border">
                     <h3 class="box-title"><a href="{{ route('accounts.index',['asset']) }}" title="{{ 'yourAccounts'|_ }}">{{ 'yourAccounts'|_ }}</a></h3>
                 </div>
@@ -22,7 +22,7 @@
             </div>
 
             {# BUDGETS #}
-            <div class="box">
+            <div class="box db-card">
                 <div class="box-header with-border">
                     <h3 class="box-title"><a href="{{ route('budgets.index') }}" title="{{ 'budgetsAndSpending'|_ }}">{{ 'budgetsAndSpending'|_ }}</a></h3>
                 </div>
@@ -37,7 +37,7 @@
                 </div>
             </div>
             {# CATEGORIES #}
-            <div class="box">
+            <div class="box db-card">
                 <div class="box-header with-border">
                     <h3 class="box-title"><a href="{{ route('categories.index') }}" title="{{ 'categories'|_ }}">{{ 'categories'|_ }}</a></h3>
 
@@ -58,7 +58,7 @@
             {# TRANSACTIONS #}
             <div id="all_transactions">
                 {% for data in transactions %}
-                    <div class="box">
+                    <div class="box db-card">
                         <div class="box-header with-border">
                             <h3 class="box-title"><a href="{{ route('accounts.show', data.account.id) }}">{{ data.account.name }}</a></h3>
                         </div>
@@ -109,7 +109,7 @@
 
             {% if billCount > 0 %}
                 {# BILLS #}
-                <div class="box">
+                <div class="box db-card">
                     <div class="box-header with-border">
                         <h3 class="box-title"><a href="{{ route('bills.index') }}" title="{{ 'bills'|_ }}">{{ 'bills'|_ }}</a></h3>
 
@@ -135,7 +135,7 @@
     <div class="row">
         <div class="col-lg-12 col-md-12 col-sm-12">
             {# EXPENSE ACCOUNTS #}
-            <div class="box">
+            <div class="box db-card">
                 <div class="box-header with-border">
                     <h3 class="box-title"><a href="{{ route('accounts.index',['expense']) }}"
                                              title="{{ 'expense_accounts'|_ }}">{{ 'expense_accounts'|_ }}</a>
@@ -150,7 +150,7 @@
                 </div>
             </div>
             {# OPTIONAL REVENUE ACCOUNTS #}
-            <div class="box">
+            <div class="box db-card">
                 <div class="box-header with-border">
                     <h3 class="box-title"><a href="{{ route('accounts.index',['revenue']) }}"
                                              title="{{ 'revenue_accounts'|_ }}">{{ 'revenue_accounts'|_ }}</a></h3>

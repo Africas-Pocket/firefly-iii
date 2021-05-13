@@ -9,52 +9,45 @@
     <form method="POST" action="{{ route('piggy-banks.store') }}" accept-charset="UTF-8" class="form-horizontal" id="store" enctype="multipart/form-data">
         <input name="_token" type="hidden" value="{{ csrf_token() }}">
         <input type="hidden" name="repeats" value="0"/>
-        <div class="row">
-            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                <div class="box box-primary">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">{{ 'mandatoryFields'|_ }}</h3>
-                    </div>
-                    <div class="box-body">
-
-                        {{ ExpandedForm.text('name') }}
-                        {{ AccountForm.assetAccountList('account_id', null, {label: 'saveOnAccount'|_   }) }}
-                        {{ ExpandedForm.amountNoCurrency('targetamount') }}
-
-                    </div>
+        <div class="container-fluid goal-form">
+               
+            <div class="box-body row">
+                <h1 class="text-center mb-5">
+                    <img src="new budget icon.png">
+                    ADD NEW PIGGY BANK
+                </h1>
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    {{ ExpandedForm.text('name', null, {helpText: '(Required)'}) }}
                 </div>
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    {{ AccountForm.assetAccountList('account_id', null, {label: 'saveOnAccount'|_, helpText: '(Required)'   }) }}
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    {{ ExpandedForm.amountNoCurrency('targetamount', null, {helpText: '(Required)'} ) }}
+                </div>
+
+    
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    {{ ExpandedForm.date('targetdate') }}
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    {{ ExpandedForm.textarea('notes', null, {helpText: trans('firefly.field_supports_markdown')} ) }}
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    {{ ExpandedForm.file('attachments[]', {'multiple': 'multiple','helpText': trans('firefly.upload_max_file_size', {'size': uploadSize|filesize}) }) }}
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    {{ ExpandedForm.objectGroup() }}
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    {{ ExpandedForm.optionsList('create','piggy bank') }}
+                </div>
+               
             </div>
-            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                <div class="box">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">{{ 'optionalFields'|_ }}</h3>
-                    </div>
-                    <div class="box-body">
-                        {{ ExpandedForm.date('targetdate') }}
-                        {{ ExpandedForm.textarea('notes', null, {helpText: trans('firefly.field_supports_markdown')} ) }}
-                        {{ ExpandedForm.file('attachments[]', {'multiple': 'multiple','helpText': trans('firefly.upload_max_file_size', {'size': uploadSize|filesize}) }) }}
-                        {{ ExpandedForm.objectGroup() }}
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                {# panel for options #}
-                <div class="box">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">{{ 'options'|_ }}</h3>
-                    </div>
-                    <div class="box-body">
-                        {{ ExpandedForm.optionsList('create','piggy bank') }}
-                    </div>
-                    <div class="box-footer">
-                        <button type="submit" class="btn btn-success pull-right">
-                            {{ 'store_piggy_bank'|_ }}
-                        </button>
-                    </div>
-                </div>
-
+            <div class="row text-center">
+                <button type="submit" class="btn">
+                        {{ 'store_piggy_bank'|_ }}
+                </button>
             </div>
         </div>
     </form>
